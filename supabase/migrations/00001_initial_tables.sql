@@ -67,16 +67,20 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
--- Create triggers for updated_at
+-- Create triggers for updated_at (drop first if exists)
+DROP TRIGGER IF EXISTS update_categories_updated_at ON categories;
 CREATE TRIGGER update_categories_updated_at BEFORE UPDATE ON categories
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_products_updated_at ON products;
 CREATE TRIGGER update_products_updated_at BEFORE UPDATE ON products
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_site_settings_updated_at ON site_settings;
 CREATE TRIGGER update_site_settings_updated_at BEFORE UPDATE ON site_settings
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_pre_orders_updated_at ON pre_orders;
 CREATE TRIGGER update_pre_orders_updated_at BEFORE UPDATE ON pre_orders
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
@@ -86,26 +90,33 @@ ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pre_orders ENABLE ROW LEVEL SECURITY;
 
--- Create RLS policies to allow public read (for user view)
+-- Create RLS policies to allow public read (for user view) (drop first if exists)
+DROP POLICY IF EXISTS "Allow public read access on categories" ON categories;
 CREATE POLICY "Allow public read access on categories" ON categories
   FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Allow public read access on products" ON products;
 CREATE POLICY "Allow public read access on products" ON products
   FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Allow public read access on site_settings" ON site_settings;
 CREATE POLICY "Allow public read access on site_settings" ON site_settings
   FOR SELECT USING (true);
 
--- Create RLS policies to allow authenticated users to manage data
+-- Create RLS policies to allow authenticated users to manage data (drop first if exists)
+DROP POLICY IF EXISTS "Allow authenticated users to manage categories" ON categories;
 CREATE POLICY "Allow authenticated users to manage categories" ON categories
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Allow authenticated users to manage products" ON products;
 CREATE POLICY "Allow authenticated users to manage products" ON products
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Allow authenticated users to manage site_settings" ON site_settings;
 CREATE POLICY "Allow authenticated users to manage site_settings" ON site_settings
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Allow authenticated users to manage pre_orders" ON pre_orders;
 CREATE POLICY "Allow authenticated users to manage pre_orders" ON pre_orders
   USING (auth.role() = 'authenticated');
 

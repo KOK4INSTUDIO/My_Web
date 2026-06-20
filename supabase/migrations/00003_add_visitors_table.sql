@@ -10,11 +10,13 @@ CREATE TABLE IF NOT EXISTS visitors (
 -- Enable RLS
 ALTER TABLE visitors ENABLE ROW LEVEL SECURITY;
 
--- Allow public insert (for tracking)
+-- Allow public insert (for tracking) (drop first if exists)
+DROP POLICY IF EXISTS "Allow public insert on visitors" ON visitors;
 CREATE POLICY "Allow public insert on visitors" ON visitors
   FOR INSERT WITH CHECK (true);
 
--- Allow authenticated read
+-- Allow authenticated read (drop first if exists)
+DROP POLICY IF EXISTS "Allow authenticated read on visitors" ON visitors;
 CREATE POLICY "Allow authenticated read on visitors" ON visitors
   FOR SELECT USING (auth.role() = 'authenticated');
 
