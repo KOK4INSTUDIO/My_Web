@@ -4,8 +4,61 @@ import { supabase } from '@/lib/supabase'
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@/views/Home.vue')
+    name: 'landing',
+    component: () => import('@/views/Landing.vue')
+  },
+  {
+    path: '/auth',
+    name: 'auth',
+    component: () => import('@/views/LandingLogin.vue')
+  },
+  {
+    path: '/user/login',
+    name: 'user-login',
+    component: () => import('@/views/user/UserLogin.vue')
+  },
+  {
+    path: '/user/register',
+    name: 'user-register',
+    component: () => import('@/views/user/UserRegister.vue')
+  },
+  {
+    path: '/home',
+    name: 'user',
+    component: () => import('@/views/user/Layout.vue'),
+    meta: { requiresUserAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'user-home',
+        component: () => import('@/views/user/Home.vue')
+      },
+      {
+        path: 'products',
+        name: 'user-products',
+        component: () => import('@/views/user/Products.vue')
+      },
+      {
+        path: 'product/:slug',
+        name: 'user-product-detail',
+        component: () => import('@/views/user/ProductDetail.vue')
+      },
+      {
+        path: 'about',
+        name: 'user-about',
+        component: () => import('@/views/user/Portfolio.vue')
+      },
+      {
+        path: 'services',
+        name: 'user-services',
+        component: () => import('@/views/user/Services.vue')
+      },
+      {
+        path: 'contact',
+        name: 'user-contact',
+        component: () => import('@/views/user/Contact.vue')
+      }
+    ]
   },
   {
     path: '/admin/login',
@@ -29,6 +82,11 @@ const routes = [
         component: () => import('@/views/admin/Products.vue')
       },
       {
+        path: 'products/category/:categoryId',
+        name: 'admin-products-by-category',
+        component: () => import('@/views/admin/Products.vue')
+      },
+      {
         path: 'categories',
         name: 'admin-categories',
         component: () => import('@/views/admin/Categories.vue')
@@ -39,35 +97,11 @@ const routes = [
         component: () => import('@/views/admin/Inventory.vue')
       },
       {
-        path: 'pre-orders',
-        name: 'admin-pre-orders',
-        component: () => import('@/views/admin/PreOrders.vue')
-      },
-      {
-        path: 'media',
-        name: 'admin-media',
-        component: () => import('@/views/admin/Media.vue')
-      },
-      {
-        path: 'banners',
-        name: 'admin-banners',
-        component: () => import('@/views/admin/Banners.vue')
-      },
-      {
-        path: 'social',
-        name: 'admin-social',
-        component: () => import('@/views/admin/Social.vue')
-      },
-      {
         path: 'analytics',
         name: 'admin-analytics',
         component: () => import('@/views/admin/Analytics.vue')
       },
-      {
-        path: 'settings',
-        name: 'admin-settings',
-        component: () => import('@/views/admin/Settings.vue')
-      },
+
       {
         path: 'audit-logs',
         name: 'admin-audit-logs',
@@ -85,11 +119,21 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const { data: { session } } = await supabase.auth.getSession()
   
+  // Auth for admin
   if (to.meta.requiresAuth && !session) {
     next('/admin/login')
   } else if (to.path === '/admin/login' && session) {
     next('/admin')
-  } else {
+  } 
+  // Auth for user
+  else if (to.meta.requiresUserAuth && !session) {
+    next('/auth')
+  } 
+  // Redirect to home if user is already logged in and tries to access landing/login/register
+  else if (session && (to.path === '/auth' || to.path === '/user/login' || to.path === '/user/register')) {
+    next('/home')
+  }
+  else {
     next()
   }
 })

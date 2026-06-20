@@ -1,163 +1,243 @@
 <template>
-  <div class="space-y-5">
-    <div class="flex items-center justify-between">
-      <h3 class="font-display text-lg font-bold text-black">Inventory Logs</h3>
-      <button @click="showAdjustModal = true" class="px-4 py-2.5 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700 transition-colors shadow-md text-xs">+ Adjust Stock</button>
+  <div class="space-y-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <h3 class="font-display text-xl font-bold text-accent-black">Inventory</h3>
     </div>
 
-    <!-- Stock Summary -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="bg-white border-2 border-black rounded-lg shadow-sm p-4">
-        <p class="text-gray-600 text-xs mb-1">Total Items</p>
-        <p class="font-display text-2xl font-bold text-black">{{ totalItems }}</p>
-      </div>
-      <div class="bg-white border-2 border-black rounded-lg shadow-sm p-4">
-        <p class="text-gray-600 text-xs mb-1">Low Stock</p>
-        <p class="font-display text-2xl font-bold text-red-600">{{ lowStockCount }}</p>
-      </div>
-      <div class="bg-white border-2 border-black rounded-lg shadow-sm p-4">
-        <p class="text-gray-600 text-xs mb-1">Out of Stock</p>
-        <p class="font-display text-2xl font-bold text-black">{{ outOfStockCount }}</p>
+    <!-- Products List -->
+    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full" style="min-width: 700px;">
+          <thead>
+            <tr class="bg-gray-50 border-b border-gray-200">
+              <th class="px-5 py-4 text-left text-xs font-bold text-gray-700">Product</th>
+              <th class="px-5 py-4 text-left text-xs font-bold text-gray-700 hidden md:table-cell">SKU</th>
+              <th class="px-5 py-4 text-left text-xs font-bold text-gray-700">Current Stock</th>
+              <th class="px-5 py-4 text-left text-xs font-bold text-gray-700">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr v-for="product in products" :key="product.id" class="hover:bg-gray-50 transition-colors">
+              <td class="px-5 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-gray-100 border border-gray-200 rounded flex items-center justify-center overflow-hidden">
+                    <span v-if="product.gallery && product.gallery[0]" class="w-full h-full bg-cover bg-center" :style="{ backgroundImage: 'url(' + product.gallery[0] + ')' }"></span>
+                    <span v-else class="material-icons-round text-gray-400 text-base">image</span>
+                  </div>
+                  <div>
+                    <p class="font-medium text-accent-black text-sm">{{ product.name }}</p>
+                    <p class="text-xs text-gray-500 hidden md:block">{{ product.slug }}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-5 py-4 text-gray-500 font-mono text-xs hidden md:table-cell">{{ product.sku || '-' }}</td>
+              <td class="px-5 py-4 text-sm" :class="{ 'text-red-600 font-medium': product.stock < 10 }">
+                {{ product.stock }}
+              </td>
+              <td class="px-5 py-4">
+                <div class="flex items-center gap-2">
+                  <button @click="showStockModalFunc(product, 'in')" class="text-green-600 hover:text-green-700 px-3 py-1.5 border border-green-200 rounded hover:bg-green-50 transition-colors text-xs font-medium">
+                    + Stock In
+                  </button>
+                  <button @click="showStockModalFunc(product, 'out')" class="text-red-600 hover:text-red-700 px-3 py-1.5 border border-red-200 rounded hover:bg-red-50 transition-colors text-xs font-medium">
+                    - Stock Out
+                  </button>
+                  <button @click="showLogModalFunc(product)" class="text-gray-500 hover:text-accent-black p-1.5 rounded transition-colors">
+                    <span class="material-icons-round text-lg">history</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="products.length === 0">
+              <td colspan="4" class="px-6 py-12 text-center">
+                <span class="material-icons-round text-5xl mb-3 block text-gray-300">inventory</span>
+                <p class="text-gray-500 text-sm">No products yet. Add your first product!</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <!-- Inventory Logs Table -->
-    <div class="bg-white border-2 border-black rounded-lg shadow-sm overflow-x-auto">
-      <table class="w-full">
-        <thead class="bg-gray-50 border-b-2 border-black">
-          <tr>
-            <th class="px-3 py-2 text-left text-xs font-bold text-black">Date</th>
-            <th class="px-3 py-2 text-left text-xs font-bold text-black">Product</th>
-            <th class="px-3 py-2 text-left text-xs font-bold text-black">Type</th>
-            <th class="px-3 py-2 text-left text-xs font-bold text-black">Qty</th>
-            <th class="px-3 py-2 text-left text-xs font-bold text-black">Stock Before</th>
-            <th class="px-3 py-2 text-left text-xs font-bold text-black">Stock After</th>
-            <th class="px-3 py-2 text-left text-xs font-bold text-black">Note</th>
-            <th class="px-3 py-2 text-left text-xs font-bold text-black">Admin</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          <tr v-for="log in inventoryLogs" :key="log.id" class="hover:bg-gray-50">
-            <td class="px-3 py-2 text-gray-600 text-xs">
-              {{ new Date(log.created_at).toLocaleString('id-ID') }}
-            </td>
-            <td class="px-3 py-2 text-black text-xs">{{ log.product?.name || 'Unknown' }}</td>
-            <td class="px-3 py-2">
-              <span class="px-2 py-1 text-[10px] font-bold rounded" :class="getTypeClass(log.type)">
-                {{ log.type }}
-              </span>
-            </td>
-            <td class="px-3 py-2 text-black font-bold text-xs" :class="{ 'text-green-600': log.type === 'in', 'text-red-600': log.type === 'out' }">
-              {{ log.type === 'in' ? '+' : '' }}{{ log.quantity }}
-            </td>
-            <td class="px-3 py-2 text-gray-600 text-xs">{{ log.stock_before }}</td>
-            <td class="px-3 py-2 text-black font-bold text-xs">{{ log.stock_after }}</td>
-            <td class="px-3 py-2 text-gray-600 text-xs max-w-xs truncate">{{ log.note || '-' }}</td>
-            <td class="px-3 py-2 text-gray-600 text-xs">{{ log.admin_id?.slice(0, 8) || '-' }}</td>
-          </tr>
-          <tr v-if="inventoryLogs.length === 0">
-            <td colspan="8" class="px-6 py-8 text-center text-gray-600 text-xs">
-              No inventory logs yet
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Adjust Stock Modal -->
-    <div v-if="showAdjustModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div class="bg-white max-w-lg w-full border-2 border-black rounded-lg shadow-lg overflow-hidden">
-        <div class="p-4 border-b-2 border-black flex items-center justify-between bg-gray-50">
-          <h3 class="font-bold text-black text-sm">Adjust Stock</h3>
-          <button @click="showAdjustModal = false" class="text-gray-600 hover:text-black text-xl">✕</button>
+    <!-- Stock In/Out Modal -->
+    <div v-if="showStockModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+      <div class="bg-white max-w-md w-full my-4 rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+        <div class="p-5 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white z-10">
+          <h3 class="font-bold text-accent-black flex items-center gap-2">
+            <span class="material-icons-round" :class="stockForm.type === 'in' ? 'text-green-600' : 'text-red-600'">
+              {{ stockForm.type === 'in' ? 'add_circle' : 'remove_circle' }}
+            </span>
+            {{ stockForm.type === 'in' ? 'Stock In' : 'Stock Out' }}
+          </h3>
+          <button @click="showStockModal = false" class="text-gray-400 hover:text-accent-black hover:bg-gray-50 p-1.5 rounded-full transition-colors">
+            <span class="material-icons-round">close</span>
+          </button>
         </div>
-        <form @submit.prevent="adjustStock" class="p-4 space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-black mb-1">Product</label>
-            <select v-model="adjustForm.product_id" required class="w-full px-3 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-red-500 rounded-lg text-xs">
-              <option value="">Select product...</option>
-              <option v-for="product in products" :key="product.id" :value="product.id">
-                {{ product.name }} (Stock: {{ product.stock }})
-              </option>
-            </select>
+        <form @submit.prevent="saveStock" class="p-5 space-y-4">
+          <div v-if="selectedProduct">
+            <p class="text-gray-700 text-sm mb-1">Product: <span class="font-medium text-accent-black">{{ selectedProduct.name }}</span></p>
+            <p class="text-gray-500 text-xs mb-4">Current Stock: <span class="font-medium">{{ selectedProduct.stock }}</span></p>
           </div>
           <div>
-            <label class="block text-xs font-bold text-black mb-1">Type</label>
-            <select v-model="adjustForm.type" required class="w-full px-3 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-red-500 rounded-lg text-xs">
-              <option value="in">Stock In (+)</option>
-              <option value="out">Stock Out (-)</option>
-              <option value="adjustment">Adjustment</option>
-            </select>
+            <label class="block text-xs font-bold text-gray-700 mb-1.5">Quantity</label>
+            <input v-model.number="stockForm.quantity" type="number" required min="1" class="w-full px-4 py-2.5 border border-gray-300 focus:outline-none focus:border-accent-black transition-colors text-sm">
           </div>
           <div>
-            <label class="block text-xs font-bold text-black mb-1">Quantity</label>
-            <input v-model.number="adjustForm.quantity" type="number" min="1" required class="w-full px-3 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-red-500 rounded-lg text-xs">
+            <label class="block text-xs font-bold text-gray-700 mb-1.5">Note (optional)</label>
+            <textarea v-model="stockForm.note" rows="3" class="w-full px-4 py-2.5 border border-gray-300 focus:outline-none focus:border-accent-black transition-colors text-sm" placeholder="Add a note..."></textarea>
           </div>
-          <div>
-            <label class="block text-xs font-bold text-black mb-1">Note</label>
-            <textarea v-model="adjustForm.note" rows="2" class="w-full px-3 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-red-500 rounded-lg text-xs" placeholder="Reason for adjustment..."></textarea>
-          </div>
-          <div class="flex gap-3 pt-2">
-            <button type="button" @click="showAdjustModal = false" class="flex-1 px-4 py-2 rounded-lg border-2 border-black text-black font-bold hover:bg-gray-100 transition-colors text-xs">Cancel</button>
-            <button type="submit" class="flex-1 px-4 py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700 transition-colors text-xs">Confirm Adjustment</button>
+          <div class="flex gap-3 pt-3 border-t border-gray-200">
+            <button type="button" @click="showStockModal = false" class="flex-1 px-5 py-2.5 border border-gray-300 text-accent-black font-medium hover:bg-gray-50 transition-colors text-sm">Cancel</button>
+            <button type="submit" :class="['flex-1 px-5 py-2.5 font-medium text-white transition-colors text-sm', stockForm.type === 'in' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700']">
+              {{ stockForm.type === 'in' ? 'Add Stock' : 'Remove Stock' }}
+            </button>
           </div>
         </form>
+      </div>
+    </div>
+
+    <!-- Stock Log Modal -->
+    <div v-if="showLogModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+      <div class="bg-white max-w-3xl w-full my-4 rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+        <div class="p-5 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white z-10">
+          <h3 class="font-bold text-accent-black flex items-center gap-2">
+            <span class="material-icons-round">history</span>
+            Stock History
+            <span v-if="selectedProduct" class="text-gray-500 font-normal">- {{ selectedProduct.name }}</span>
+          </h3>
+          <button @click="showLogModal = false" class="text-gray-400 hover:text-accent-black hover:bg-gray-50 p-1.5 rounded-full transition-colors">
+            <span class="material-icons-round">close</span>
+          </button>
+        </div>
+        <div class="p-5">
+          <div class="space-y-3 max-h-96 overflow-y-auto">
+            <div v-for="log in productLogs" :key="log.id" class="flex gap-4 pb-3 border-b border-gray-100 last:border-b-0">
+              <div class="flex flex-col items-center">
+                <div :class="['w-2.5 h-2.5 rounded-full', log.type === 'in' ? 'bg-green-600' : 'bg-red-600']"></div>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <p class="text-sm font-medium text-accent-black">
+                    {{ log.type === 'in' ? 'Stock In' : 'Stock Out' }}
+                    <span :class="['text-xs font-bold', log.type === 'in' ? 'text-green-600' : 'text-red-600']">
+                      {{ log.type === 'in' ? '+' : '-' }}{{ log.quantity }}
+                    </span>
+                  </p>
+                  <p class="text-xs text-gray-500">{{ new Date(log.created_at).toLocaleString('id-ID') }}</p>
+                </div>
+                <p class="text-xs text-gray-600 mb-1">Before: {{ log.stock_before }} → After: {{ log.stock_after }}</p>
+                <p v-if="log.note" class="text-xs text-gray-500">{{ log.note }}</p>
+              </div>
+            </div>
+            <div v-if="productLogs.length === 0" class="text-center py-6">
+              <p class="text-gray-500 text-sm">No stock history yet.</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 border-t border-gray-200 flex justify-end">
+          <button @click="showLogModal = false" class="px-5 py-2.5 border border-gray-300 text-accent-black font-medium hover:bg-gray-50 transition-colors text-sm">Close</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { supabase } from '@/lib/supabase'
 
-const inventoryLogs = ref([])
 const products = ref([])
-const showAdjustModal = ref(false)
+const showStockModal = ref(false)
+const showLogModal = ref(false)
+const selectedProduct = ref(null)
+const productLogs = ref([])
 
-const adjustForm = ref({
-  product_id: '',
+const stockForm = ref({
   type: 'in',
   quantity: 0,
   note: ''
 })
 
-const totalItems = computed(() => products.value.reduce((sum, p) => sum + p.stock, 0))
-const lowStockCount = computed(() => products.value.filter(p => p.stock < 10 && p.stock > 0).length)
-const outOfStockCount = computed(() => products.value.filter(p => p.stock === 0).length)
-
 onMounted(async () => {
-  await loadLogs()
   await loadProducts()
 })
 
-async function loadLogs() {
-  const { data } = await supabase
-    .from('inventory_logs')
-    .select('*, product:products(*)')
-    .order('created_at', { ascending: false })
-    .limit(50)
-  
-  inventoryLogs.value = data || []
-}
-
 async function loadProducts() {
-  const { data } = await supabase.from('products').select('*').order('name')
-  products.value = data || []
-}
-
-function getTypeClass(type) {
-  const classes = {
-    in: 'bg-green-100 text-green-800 border border-green-300',
-    out: 'bg-red-100 text-red-800 border border-red-300',
-    adjustment: 'bg-yellow-100 text-yellow-800 border border-yellow-300'
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('name')
+    
+    if (error) throw error
+    products.value = data || []
+  } catch (error) {
+    console.error('Error loading products:', error)
   }
-  return classes[type] || 'bg-gray-100 text-gray-800 border border-gray-300'
 }
 
-function adjustStock() {
-  console.log('Adjusting stock:', adjustForm.value)
-  showAdjustModal.value = false
-  adjustForm.value = { product_id: '', type: 'in', quantity: 0, note: '' }
+async function showStockModalFunc(product, type) {
+  selectedProduct.value = product
+  stockForm.value = { type, quantity: 0, note: '' }
+  showStockModal.value = true
+}
+
+async function showLogModalFunc(product) {
+  selectedProduct.value = product
+  await loadProductLogs(product.id)
+  showLogModal.value = true
+}
+
+async function loadProductLogs(productId) {
+  try {
+    const { data, error } = await supabase
+      .from('inventory_logs')
+      .select('*')
+      .eq('product_id', productId)
+      .order('created_at', { ascending: false })
+    
+    if (error) throw error
+    productLogs.value = data || []
+  } catch (error) {
+    console.error('Error loading logs:', error)
+  }
+}
+
+async function saveStock() {
+  if (!selectedProduct.value || stockForm.value.quantity <= 0) return
+
+  const product = selectedProduct.value
+  const stockBefore = product.stock
+  let stockAfter
+
+  if (stockForm.value.type === 'in') {
+    stockAfter = stockBefore + stockForm.value.quantity
+  } else {
+    stockAfter = stockBefore - stockForm.value.quantity
+    if (stockAfter < 0) {
+      alert('Stock tidak cukup!')
+      return
+    }
+  }
+
+  try {
+    // Update product stock
+    await supabase.from('products').update({ stock: stockAfter }).eq('id', product.id)
+
+    // Insert log
+    await supabase.from('inventory_logs').insert({
+      product_id: product.id,
+      type: stockForm.value.type,
+      quantity: stockForm.value.quantity,
+      stock_before: stockBefore,
+      stock_after: stockAfter,
+      note: stockForm.value.note
+    })
+
+    await loadProducts()
+    showStockModal.value = false
+  } catch (error) {
+    console.error('Error updating stock:', error)
+  }
 }
 </script>

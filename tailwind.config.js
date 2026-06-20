@@ -9,21 +9,26 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#fef2f2',
-          100: '#fee2e2',
-          200: '#fecaca',
-          300: '#fca5a5',
-          400: '#f87171',
-          500: '#ef4444',
-          600: '#dc2626',
-          700: '#b91c1c',
-          800: '#991b1b',
-          900: '#7f1d1d'
+          50: '#fff1f1',
+          100: '#ffe0e0',
+          200: '#ffc1c1',
+          300: '#ff9494',
+          400: '#ff5c5c',
+          500: '#ed2633',
+          600: '#d61d2a',
+          700: '#b31622',
+          800: '#91131e',
+          900: '#78121c'
         },
         accent: {
-          red: '#ef4444',
-          black: '#0f172a',
-          white: '#ffffff'
+          DEFAULT: '#ed2633',
+          red: '#ed2633',
+          redDark: '#b31622',
+          redLight: '#ff5c5c',
+          white: '#ffffff',
+          gray: '#6b7280',
+          grayLight: '#f3f4f6',
+          dark: '#1f2937'
         }
       },
       fontFamily: {
@@ -31,7 +36,9 @@ export default {
         display: ['Plus Jakarta Sans', 'sans-serif']
       },
       boxShadow: {
-        card: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)'
+        card: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+        soft: '0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)',
+        red: '0 10px 40px -10px rgba(237, 38, 51, 0.45)'
       }
     }
   },
