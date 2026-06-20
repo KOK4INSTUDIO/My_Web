@@ -304,7 +304,7 @@ async function loadVisitorData() {
 async function loadStats() {
   const { count: productsCount } = await supabase.from('products').select('*', { count: 'exact', head: true })
   const { count: publishedCount } = await supabase.from('products').select('*', { count: 'exact', head: true }).eq('status', 'published')
-  const { count: preOrdersCount } = await supabase.from('pre-orders').select('*', { count: 'exact', head: true }).not('status', 'in', '("selesai","dibatalkan")')
+  const { count: preOrdersCount } = await supabase.from('pre_orders').select('*', { count: 'exact', head: true }).not('status', 'in', '("selesai","dibatalkan")')
   const { count: lowStockCount } = await supabase.from('products').select('*', { count: 'exact', head: true }).lt('stock', 10)
   
   stats.value = {
