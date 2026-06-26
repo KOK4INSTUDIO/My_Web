@@ -33,9 +33,6 @@
           
           <!-- Icons -->
           <div class="hidden md:flex items-center gap-4">
-            <button class="p-2 text-accent-gray hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all">
-              <span class="material-icons-round text-2xl">search</span>
-            </button>
             <button @click="handleLogout" class="flex items-center gap-2 px-4 py-2 bg-primary-50 text-primary-700 hover:bg-primary-100 rounded-xl font-medium text-sm transition-all">
               <span class="material-icons-round text-lg">logout</span>
               Keluar
@@ -55,10 +52,7 @@
             <router-link to="/home/products" @click="mobileMenuOpen = false" class="text-accent-dark font-medium text-lg">Shop</router-link>
             <router-link to="/home/about" @click="mobileMenuOpen = false" class="text-accent-dark font-medium text-lg">About</router-link>
             <router-link to="/home/contact" @click="mobileMenuOpen = false" class="text-accent-dark font-medium text-lg">Contact</router-link>
-            <div class="pt-4 border-t border-gray-100 flex gap-4">
-              <button class="p-2 text-accent-gray hover:text-primary-600 hover:bg-primary-50 rounded-xl">
-                <span class="material-icons-round text-2xl">search</span>
-              </button>
+            <div class="pt-4 border-t border-gray-100">
               <button @click="handleLogout" class="flex items-center gap-2 px-4 py-2 bg-primary-50 text-primary-700 rounded-xl font-medium text-sm">
                 <span class="material-icons-round text-lg">logout</span>
                 Keluar

@@ -51,17 +51,17 @@
           <div class="mt-12">
             <h3 class="font-medium text-accent-black mb-4">Ikuti Kami</h3>
             <div class="flex gap-4">
-              <a href="https://www.instagram.com/kok41nstudio?igsh=Z2xuam1qc3pxcWZt" target="_blank" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-accent-black hover:text-white transition-all">
-                <img src="/asset/instagram.png" alt="TikTok" class="w-6 h-6 object-contain" />
+              <a href="https://www.instagram.com/kok41nstudio?igsh=Z2xuam1qc3pxcWZt" target="_blank" class="social-btn w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500 transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                <img src="/asset/instagram.png" alt="Instagram" class="social-icon w-6 h-6 object-contain transition-all duration-300" />
               </a>
-              <a href="https://www.tiktok.com/@kok4instudio?_r=1&_t=ZS-97Lirab1chB" target="_blank" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center transition-all hover:bg-accent-black">
-                <img src="/asset/tiktok.png" alt="TikTok" class="w-6 h-6 object-contain" />
+              <a href="https://www.tiktok.com/@kok4instudio?_r=1&_t=ZS-97Lirab1chB" target="_blank" class="social-btn w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-accent-black transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                <img src="/asset/tiktok.png" alt="TikTok" class="social-icon w-6 h-6 object-contain transition-all duration-300" />
               </a>
-              <a href="https://shopee.co.id/kok4instudio" target="_blank" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center transition-all hover:bg-accent-black">
-                <img src="/asset/shopee.png" alt="Shopee" class="w-6 h-6 object-contain" />
+              <a href="https://shopee.co.id/kok4instudio" target="_blank" class="social-btn w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                <img src="/asset/shopee.png" alt="Shopee" class="social-icon w-6 h-6 object-contain transition-all duration-300" />
               </a>
-              <a href="https://wa.me/6289501798516" target="_blank" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-accent-black hover:text-white transition-all">
-                <img src="/asset/whatsapp.png" alt="Whatsapp" class="w-6 h-6 object-contain" />
+              <a href="https://wa.me/6289501798516" target="_blank" class="social-btn w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-500 transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                <img src="/asset/whatsapp.png" alt="Whatsapp" class="social-icon w-6 h-6 object-contain transition-all duration-300" />
               </a>
             </div>
           </div>
@@ -139,3 +139,13 @@ function submitForm() {
   form.value = { name: '', email: '', subject: 'Pertanyaan Produk', message: '' }
 }
 </script>
+
+<style scoped>
+.social-icon {
+  filter: brightness(0) saturate(100%) invert(45%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(85%);
+}
+
+.social-btn:hover .social-icon {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(244deg) brightness(117%) contrast(116%);
+}
+</style>
