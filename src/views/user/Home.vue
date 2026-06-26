@@ -68,13 +68,31 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
     </section>
 
     <!-- Footer -->
-    <footer class="bg-accent-dark text-white py-12">
+    <footer class="py-16 md:py-20 bg-primary-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <div class="mb-6">
-            <span class="font-display text-2xl font-bold">KOK4INSTUDIO™</span>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          <!-- Payment Method -->
+          <div class="text-center">
+            <h2 class="font-display text-lg md:text-xl font-bold text-accent-dark mb-6 tracking-wide">Payment Method</h2>
+            <div class="flex flex-wrap justify-center items-center gap-4 md:gap-6">
+              <img src="/asset/qris.png" alt="Qris" class="h-8 md:h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" style="filter: brightness(0) saturate(100%) invert(16%) sepia(88%) saturate(6395%) hue-rotate(353deg) brightness(92%) contrast(106%);">
+              <img src="/asset/mandiri.png" alt="Mandiri" class="h-8 md:h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" style="filter: brightness(0) saturate(100%) invert(16%) sepia(88%) saturate(6395%) hue-rotate(353deg) brightness(92%) contrast(106%);">
+              <img src="/asset/bca.png" alt="BCA" class="h-8 md:h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" style="filter: brightness(0) saturate(100%) invert(16%) sepia(88%) saturate(6395%) hue-rotate(353deg) brightness(92%) contrast(106%);">
+              <img src="/asset/visa.png" alt="VISA" class="h-8 md:h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" style="filter: brightness(0) saturate(100%) invert(16%) sepia(88%) saturate(6395%) hue-rotate(353deg) brightness(92%) contrast(106%);">
+            </div>
           </div>
-          <p class="text-gray-400 text-sm mb-6">
+          
+          <!-- Shipment Method -->
+          <div class="text-center">
+            <h2 class="font-display text-lg md:text-xl font-bold text-accent-dark mb-6 tracking-wide">Shipment Method</h2>
+            <div class="flex flex-wrap justify-center items-center gap-4 md:gap-6">
+              <img src="/asset/j&t.png" alt="J&T Express" class="h-10 md:h-12 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" style="filter: brightness(0) saturate(100%) invert(16%) sepia(88%) saturate(6395%) hue-rotate(353deg) brightness(92%) contrast(106%);">
+              <img src="/asset/jne.png" alt="JNE Express" class="h-10 md:h-12 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" style="filter: brightness(0) saturate(100%) invert(16%) sepia(88%) saturate(6395%) hue-rotate(353deg) brightness(92%) contrast(106%);">
+            </div>
+          </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-gray-200 text-center">
+          <p class="text-gray-500 text-sm">
             © 2026 KOK4INSTUDIO. All rights reserved.
           </p>
         </div>
