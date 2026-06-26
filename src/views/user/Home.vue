@@ -67,47 +67,19 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
       </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="py-16 md:py-24 bg-white">
+    <!-- Footer -->
+    <footer class="bg-accent-dark text-white py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-12 text-center">
-          <h2 class="font-display text-3xl md:text-4xl font-bold text-accent-dark mb-4">Goods & Essentials</h2>
-          <p class="text-accent-gray max-w-2xl mx-auto">Art | Custom | Aftermarket</p>
-        </div>
-
-        <!-- Products Grid -->
-        <div v-if="products.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-          <div v-for="product in products" :key="product.id" class="group">
-            <router-link :to="`/home/product/${product.slug}`" class="block">
-              <div class="aspect-square bg-white border border-primary-100 rounded-xl mb-4 overflow-hidden shadow-soft group-hover:shadow-red transition-all">
-                <img
-                  v-if="product.gallery && product.gallery[0]"
-                  :src="getThumbnailUrl(product.gallery[0])"
-                  :alt="product.name"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                >
-                <div v-else class="w-full h-full flex items-center justify-center">
-                  <span class="material-icons-round text-6xl text-gray-300">image</span>
-                </div>
-              </div>
-              <p class="text-accent-gray text-xs mb-1">{{ product.category ? product.category.name : 'Aksesori' }}</p>
-              <h3 class="font-medium text-accent-dark mb-1">{{ product.name }}</h3>
-              <div class="flex items-center gap-2">
-                <p class="text-primary-600 font-bold">
-                  Rp {{ (product.promo_price || product.price).toLocaleString() }}
-                </p>
-                <p v-if="product.promo_price" class="text-accent-gray text-sm line-through">
-                  Rp {{ product.price.toLocaleString() }}
-                </p>
-              </div>
-            </router-link>
+        <div class="text-center">
+          <div class="mb-6">
+            <span class="font-display text-2xl font-bold">KOK4INSTUDIO™</span>
           </div>
+          <p class="text-gray-400 text-sm mb-6">
+            © 2026 KOK4INSTUDIO. All rights reserved.
+          </p>
         </div>
-
-
       </div>
-    </section>
+    </footer>
 
   </div>
 </template>
