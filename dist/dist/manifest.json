@@ -1,0 +1,18 @@
+{
+  "_vendor-36bf91ee.js": {
+    "file": "assets/vendor-36bf91ee.js"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-55c1b7ec.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-f3d2a982.js",
+    "imports": [
+      "_vendor-36bf91ee.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}
