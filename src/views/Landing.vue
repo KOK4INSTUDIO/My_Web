@@ -49,9 +49,6 @@
     <section class="bg-gradient-to-br from-primary-50 to-white py-16 md:py-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <div class="flex items-center justify-center gap-3 mb-8">
-            <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-20 md:h-32 object-contain" />
-          </div>
           <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
           <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
             Mari Berkolaborasi
@@ -218,9 +215,6 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
     <!-- Footer / CTA -->
     <section class="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16 md:py-20 shadow-red">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="flex items-center justify-center gap-3 mb-8">
-          <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-16 md:h-24 object-contain invert" />
-        </div>
         <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">Siap Memulai?</h2>
         <p class="text-white/80 mb-8">Daftar sekarang dan temukan koleksi terbaik untuk gaya Anda!</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
