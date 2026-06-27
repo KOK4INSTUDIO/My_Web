@@ -128,14 +128,14 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
           <button 
             v-if="totalProductSlides > 1"
             @click="prevProductSlide"
-            class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
+            class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
           >
             <span class="material-icons-round">arrow_back</span>
           </button>
           <button 
             v-if="totalProductSlides > 1"
             @click="nextProductSlide"
-            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
+            class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
           >
             <span class="material-icons-round">arrow_forward</span>
           </button>
