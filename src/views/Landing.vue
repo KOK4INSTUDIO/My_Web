@@ -286,7 +286,7 @@ const products = ref([])
 const banners = ref([])
 const currentSlide = ref(0)
 const carouselSlides = ref([
-  '/asset/Page01.png',
+  '/asset/video.mp4',
 ])
 const currentProductSlide = ref(0)
 const PRODUCTS_PER_SLIDE = 4
