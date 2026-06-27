@@ -1,28 +1,11 @@
 <template>
-  <div class="flex h-screen bg-gradient-to-b from-white to-primary-50">
-    <!-- Sidebar Toggle (All Screens) -->
-    <button
-      @click="sidebarOpen = !sidebarOpen"
-      class="fixed top-4 left-4 z-50 bg-white border border-primary-200 text-accent-dark p-3 rounded-xl shadow-soft hover:bg-primary-50 transition-all"
-    >
-      <span class="material-icons-round text-xl">{{ sidebarOpen ? 'menu_open' : 'menu' }}</span>
-    </button>
-
-    <!-- Sidebar Overlay (mobile) -->
-    <div
-      v-if="sidebarOpen && isMobile"
-      @click="sidebarOpen = false"
-      class="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
-    ></div>
-
-    <!-- Sidebar -->
+  <div class="min-h-screen bg-gradient-to-b from-white to-primary-50 flex flex-col md:flex-row">
+    <!-- Desktop Sidebar -->
     <aside
+      v-if="!isMobile"
       ref="sidebar"
-      class="fixed md:relative z-50 bg-white border-r border-primary-100 flex flex-col h-full transition-all duration-300 shadow-sm"
-      :class="[
-        sidebarOpen ? 'w-64' : 'w-20',
-        isMobile ? (sidebarOpen ? 'translate-x-0' : '-translate-x-full') : ''
-      ]"
+      class="hidden md:flex fixed md:relative z-50 bg-white border-r border-primary-100 flex-col h-screen transition-all duration-300 shadow-sm"
+      :class="[sidebarOpen ? 'w-64' : 'w-20']"
     >
       <!-- Logo Area -->
       <div class="p-5 border-b border-primary-100 flex items-center gap-3">
@@ -35,9 +18,6 @@
           <h1 class="font-display text-base font-bold text-accent-dark">KOK4INSTUDIO™</h1>
           <p class="text-[10px] text-accent-gray">Admin</p>
         </div>
-        <button v-if="isMobile && sidebarOpen" @click="sidebarOpen = false" class="ml-auto text-accent-gray hover:text-primary-600 p-1">
-          <span class="material-icons-round">close</span>
-        </button>
       </div>
       
       <!-- Navigation -->
@@ -47,7 +27,6 @@
           v-for="item in menuItems"
           :key="item.path"
           :to="item.path"
-          @click="isMobile && (sidebarOpen = false)"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-accent-gray transition-all hover:bg-primary-50 hover:text-primary-700 mb-0.5"
           :class="[
             isActive(item.path) ? 'bg-primary-50 text-primary-700 font-medium border border-primary-100' : '',
@@ -77,11 +56,17 @@
     </aside>
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
+    <main class="flex-1 overflow-y-auto flex flex-col">
       <!-- Header -->
       <header class="bg-white/80 backdrop-blur-md border-b border-primary-100 px-4 md:px-8 py-4 flex items-center justify-between sticky top-0 z-30">
         <div class="flex items-center gap-3">
-          <span class="w-12 md:w-16"></span>
+          <button
+            v-if="!isMobile"
+            @click="sidebarOpen = !sidebarOpen"
+            class="p-2 text-accent-dark hover:bg-primary-50 rounded-lg transition-all"
+          >
+            <span class="material-icons-round text-xl">{{ sidebarOpen ? 'menu_open' : 'menu' }}</span>
+          </button>
           <h2 class="font-display text-lg md:text-xl font-bold text-accent-dark">{{ currentPageTitle }}</h2>
         </div>
         <div class="flex items-center gap-3">
@@ -89,14 +74,36 @@
             <span class="material-icons-round text-primary-600 text-lg">schedule</span>
             {{ new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}}
           </div>
+          <button v-if="isMobile" @click="handleLogout" class="p-2 text-accent-dark hover:bg-primary-50 rounded-lg transition-all">
+            <span class="material-icons-round text-xl">logout</span>
+          </button>
         </div>
       </header>
       
       <!-- Page Content -->
-      <div class="p-4 md:p-8">
+      <div class="p-4 md:p-8 pb-24 md:pb-8">
         <router-view />
       </div>
     </main>
+
+    <!-- Mobile Bottom Navbar -->
+    <nav
+      v-if="isMobile"
+      class="fixed bottom-0 left-0 right-0 bg-white border-t border-primary-100 z-50 px-2 py-2 flex justify-around items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]"
+    >
+      <router-link
+        v-for="item in menuItems"
+        :key="item.path"
+        :to="item.path"
+        class="flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all"
+        :class="[
+          isActive(item.path) ? 'text-primary-600' : 'text-accent-gray'
+        ]"
+      >
+        <span class="material-icons-round text-2xl">{{ item.icon }}</span>
+        <span class="text-[10px] font-medium">{{ item.label }}</span>
+      </router-link>
+    </nav>
   </div>
 </template>
 
