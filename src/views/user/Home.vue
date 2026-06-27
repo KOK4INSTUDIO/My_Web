@@ -1,31 +1,20 @@
 <template>
   <div>
-    <!-- Auto Carousel Section (Full Width) -->
-    <section class="relative bg-white overflow-hidden">
-      <div 
-        class="aspect-[21/9] relative overflow-hidden"
-      >
-        <!-- Carousel Images -->
-        <div 
-          class="flex h-full transition-transform duration-500 ease-out"
-          :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
-        >
-          <div 
-            v-for="(slide, idx) in carouselSlides" 
-            :key="idx"
-            class="min-w-full h-full bg-cover bg-center"
-            :style="{ backgroundImage: `url(${slide})` }"
-          >
-            <!-- Gradient Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          </div>
-        </div>
-
-        <!-- Navigation Dots -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3">
-    
-        </div>
+    <!-- Hero Section (Full Screen) -->
+    <section class="relative bg-white overflow-hidden h-screen hero-section">
+      <div class="absolute inset-0">
+        <video
+          src="/asset/video.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          class="w-full h-full object-cover"
+        />
       </div>
+      
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/35"></div>
     </section>
 
     <!-- Hero Section -->
@@ -103,17 +92,12 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { supabase } from '@/lib/supabase'
 
 const products = ref([])
 const banners = ref([])
 const categories = ref([])
-const currentSlide = ref(0)
-const carouselSlides = ref([
-  '/asset/Page01.png',
-])
-let carouselInterval = null
 
 // Helper functions
 function getThumbnailUrl(galleryItem) {
@@ -130,17 +114,6 @@ onMounted(async () => {
   await loadCategories()
   await loadProducts()
   await loadBanners()
-  
-  // Auto slide every 3 seconds
-  carouselInterval = setInterval(() => {
-    currentSlide.value = (currentSlide.value + 1) % carouselSlides.value.length
-  }, 3000)
-})
-
-onUnmounted(() => {
-  if (carouselInterval) {
-    clearInterval(carouselInterval)
-  }
 })
 
 async function loadCategories() {
