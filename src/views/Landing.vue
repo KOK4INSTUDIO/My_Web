@@ -5,7 +5,7 @@
       <div 
         class="aspect-[21/9] relative overflow-hidden"
       >
-        <!-- Carousel Images -->
+        <!-- Carousel Slides -->
         <div 
           class="flex h-full transition-transform duration-500 ease-out"
           :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
@@ -13,11 +13,28 @@
           <div 
             v-for="(slide, idx) in carouselSlides" 
             :key="idx"
-            class="min-w-full h-full bg-cover bg-center"
-            :style="{ backgroundImage: `url(${slide})` }"
+            class="min-w-full h-full relative"
           >
+            <template v-if="slide.endsWith('.mp4')">
+              <video 
+                class="absolute inset-0 w-full h-full object-cover object-center"
+                :src="slide"
+                :poster="'/asset/Page01.png'"
+                autoplay
+                muted
+                playsinline
+                loop
+                crossorigin="anonymous"
+              ></video>
+            </template>
+            <template v-else>
+              <div 
+                class="absolute inset-0 w-full h-full bg-cover bg-center"
+                :style="{ backgroundImage: `url(${slide})` }"
+              ></div>
+            </template>
             <!-- Gradient Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
           </div>
         </div>
 
