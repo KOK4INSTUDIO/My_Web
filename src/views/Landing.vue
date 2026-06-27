@@ -19,7 +19,6 @@
               <video 
                 class="absolute inset-0 w-full h-full object-cover object-center"
                 :src="slide"
-                :poster="'/asset/Page01.png'"
                 autoplay
                 muted
                 playsinline
