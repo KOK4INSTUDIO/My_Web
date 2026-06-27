@@ -1,56 +1,40 @@
 <template>
   <div>
-    <!-- Hero Section (Full Screen) -->
-    <section class="relative bg-white overflow-hidden h-screen hero-section">
-      <!-- Carousel Container -->
-      <div class="relative w-full h-full overflow-hidden">
-        <transition name="fade" mode="out-in">
-          <div :key="currentSlide" class="absolute inset-0">
-            <img
-              :src="slides[currentSlide].src"
-              :alt="slides[currentSlide].alt"
-              class="w-full h-full object-cover object-[35%_center] md:object-center"
-            />
+    <!-- Auto Carousel Section (Full Width) -->
+    <section class="relative bg-white overflow-hidden">
+      <div 
+        class="aspect-[21/9] relative overflow-hidden"
+      >
+        <!-- Carousel Images -->
+        <div 
+          class="flex h-full transition-transform duration-500 ease-out"
+          :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
+        >
+          <div 
+            v-for="(slide, idx) in carouselSlides" 
+            :key="idx"
+            class="min-w-full h-full bg-cover bg-center"
+            :style="{ backgroundImage: `url(${slide})` }"
+          >
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
           </div>
-        </transition>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3">
+    
+        </div>
       </div>
-      
-      <!-- Navigation Arrows -->
-      <button
-        @click="prevSlide"
-        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-      </button>
-      <button
-        @click="nextSlide"
-        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </button>
-      
-      <!-- Indicators -->
-      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        <button
-          v-for="(slide, index) in slides"
-          :key="index"
-          @click="currentSlide = index"
-          :class="['w-2 h-2 rounded-full transition-all duration-300', currentSlide === index ? 'bg-white w-8' : 'bg-white/50']"
-        ></button>
-      </div>
-      
-      <!-- Overlay -->
-      <div class="absolute inset-0 bg-black/35"></div>
     </section>
 
     <!-- Hero Section -->
     <section class="bg-gradient-to-br from-primary-50 to-white py-16 md:py-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
+          <div class="flex items-center justify-center gap-3 mb-8">
+            <span class="font-display text-3xl font-bold text-accent-dark">KOK4INSTUDIO™</span>
+          </div>
           <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
           <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
             Mari Berkolaborasi
@@ -126,32 +110,10 @@ const products = ref([])
 const banners = ref([])
 const categories = ref([])
 const currentSlide = ref(0)
-const slides = ref([
-  { src: '/asset/Page01.png', alt: 'Hero Image 1' },
-  { src: '/asset/Page01.png', alt: 'Hero Image 2' },
-  { src: '/asset/Page01.png', alt: 'Hero Image 3' }
+const carouselSlides = ref([
+  '/asset/Page01.png',
 ])
-let autoSlideTimer = null
-
-function nextSlide() {
-  currentSlide.value = (currentSlide.value + 1) % slides.value.length
-}
-
-function prevSlide() {
-  currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length
-}
-
-function startAutoSlide() {
-  autoSlideTimer = setInterval(() => {
-    nextSlide()
-  }, 5000)
-}
-
-function stopAutoSlide() {
-  if (autoSlideTimer) {
-    clearInterval(autoSlideTimer)
-  }
-}
+let carouselInterval = null
 
 // Helper functions
 function getThumbnailUrl(galleryItem) {
@@ -168,11 +130,17 @@ onMounted(async () => {
   await loadCategories()
   await loadProducts()
   await loadBanners()
-  startAutoSlide()
+  
+  // Auto slide every 3 seconds
+  carouselInterval = setInterval(() => {
+    currentSlide.value = (currentSlide.value + 1) % carouselSlides.value.length
+  }, 3000)
 })
 
 onUnmounted(() => {
-  stopAutoSlide()
+  if (carouselInterval) {
+    clearInterval(carouselInterval)
+  }
 })
 
 async function loadCategories() {
@@ -221,16 +189,3 @@ async function loadProducts() {
   }
 }
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
-

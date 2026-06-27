@@ -1,56 +1,40 @@
 <template>
   <div>
-    <!-- Hero Section (Full Screen) -->
-    <section class="relative bg-white overflow-hidden h-screen hero-section">
-      <!-- Carousel Container -->
-      <div class="relative w-full h-full overflow-hidden">
-        <transition name="fade" mode="out-in">
-          <div :key="currentSlide" class="absolute inset-0">
-            <img
-              :src="slides[currentSlide].src"
-              :alt="slides[currentSlide].alt"
-              class="w-full h-full object-cover object-[35%_center] md:object-center"
-            />
+    <!-- Auto Carousel Section (Full Width) -->
+    <section class="relative bg-white overflow-hidden">
+      <div 
+        class="aspect-[21/9] relative overflow-hidden"
+      >
+        <!-- Carousel Images -->
+        <div 
+          class="flex h-full transition-transform duration-500 ease-out"
+          :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
+        >
+          <div 
+            v-for="(slide, idx) in carouselSlides" 
+            :key="idx"
+            class="min-w-full h-full bg-cover bg-center"
+            :style="{ backgroundImage: `url(${slide})` }"
+          >
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
           </div>
-        </transition>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3">
+    
+        </div>
       </div>
-      
-      <!-- Navigation Arrows -->
-      <button
-        @click="prevSlide"
-        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-      </button>
-      <button
-        @click="nextSlide"
-        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </button>
-      
-      <!-- Indicators -->
-      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        <button
-          v-for="(slide, index) in slides"
-          :key="index"
-          @click="currentSlide = index"
-          :class="['w-2 h-2 rounded-full transition-all duration-300', currentSlide === index ? 'bg-white w-8' : 'bg-white/50']"
-        ></button>
-      </div>
-      
-      <!-- Overlay -->
-      <div class="absolute inset-0 bg-black/35"></div>
     </section>
 
     <!-- Hero Section -->
     <section class="bg-gradient-to-br from-primary-50 to-white py-16 md:py-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
+          <div class="flex items-center justify-center gap-3 mb-8">
+            <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-20 md:h-32 object-contain" />
+          </div>
           <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
           <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
             Mari Berkolaborasi
@@ -108,9 +92,10 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
               <!-- Each slide shows 4 products on lg, 2 on sm, 1 on xs -->
               <div v-for="slideIndex in totalProductSlides" :key="slideIndex" class="min-w-full">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                  <div
+                  <router-link
                     v-for="product in getProductsForSlide(slideIndex - 1)"
                     :key="product.id"
+                    to="/user/login"
                     class="group"
                   >
                     <div class="aspect-square bg-white border border-primary-100 rounded-xl mb-4 overflow-hidden shadow-soft group-hover:shadow-red transition-all">
@@ -125,7 +110,7 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
                     </div>
                     <p class="text-accent-gray text-xs mb-1">{{ product.category?.name || 'Aksesori' }}</p>
                     <h3 class="font-medium text-accent-dark mb-1">{{ product.name }}</h3>
-                    <div class="flex items-center gap-2 mb-3">
+                    <div class="flex items-center gap-2">
                       <p class="text-primary-600 font-bold">
                         Rp {{ (product.promo_price || product.price)?.toLocaleString() }}
                       </p>
@@ -133,30 +118,7 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
                         Rp {{ product.price?.toLocaleString() }}
                       </p>
                     </div>
-                    <!-- Shop Links -->
-                    <div class="flex gap-2">
-                      <a
-                        v-if="product.tiktok_url"
-                        :href="product.tiktok_url"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="flex items-center gap-1 px-3 py-1.5 bg-gray-900 text-white rounded-lg text-xs font-medium hover:bg-gray-800 transition-colors"
-                      >
-                        <span class="material-icons-round text-sm">play_circle</span>
-                        TikTok
-                      </a>
-                      <a
-                        v-if="product.shopee_url"
-                        :href="product.shopee_url"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="flex items-center gap-1 px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs font-medium hover:bg-orange-600 transition-colors"
-                      >
-                        <span class="material-icons-round text-sm">shopping_cart</span>
-                        Shopee
-                      </a>
-                    </div>
-                  </div>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -166,14 +128,14 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
           <button 
             v-if="totalProductSlides > 1"
             @click="prevProductSlide"
-            class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
+            class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
           >
             <span class="material-icons-round">arrow_back</span>
           </button>
           <button 
             v-if="totalProductSlides > 1"
             @click="nextProductSlide"
-            class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
+            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
           >
             <span class="material-icons-round">arrow_forward</span>
           </button>
@@ -322,35 +284,13 @@ import { supabase } from '@/lib/supabase'
 
 const products = ref([])
 const banners = ref([])
+const currentSlide = ref(0)
+const carouselSlides = ref([
+  '/asset/Page01.png',
+])
 const currentProductSlide = ref(0)
 const PRODUCTS_PER_SLIDE = 4
-const currentSlide = ref(0)
-const slides = ref([
-  { src: '/asset/Page01.png', alt: 'Hero Image 1' },
-  { src: '/asset/Page01.png', alt: 'Hero Image 2' },
-  { src: '/asset/Page01.png', alt: 'Hero Image 3' }
-])
-let autoSlideTimer = null
-
-function nextSlide() {
-  currentSlide.value = (currentSlide.value + 1) % slides.value.length
-}
-
-function prevSlide() {
-  currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length
-}
-
-function startAutoSlide() {
-  autoSlideTimer = setInterval(() => {
-    nextSlide()
-  }, 5000)
-}
-
-function stopAutoSlide() {
-  if (autoSlideTimer) {
-    clearInterval(autoSlideTimer)
-  }
-}
+let carouselInterval = null
 
 const categories = ref([
   { id: 1, name: 'Aksesoris', slug: 'aksesoris' },
@@ -374,11 +314,17 @@ onMounted(async () => {
   await loadProducts()
   await loadAbout()
   await loadBanners()
-  startAutoSlide()
+  
+  // Auto slide every 3 seconds
+  carouselInterval = setInterval(() => {
+    currentSlide.value = (currentSlide.value + 1) % carouselSlides.value.length
+  }, 3000)
 })
 
 onUnmounted(() => {
-  stopAutoSlide()
+  if (carouselInterval) {
+    clearInterval(carouselInterval)
+  }
 })
 
 async function loadBanners() {
@@ -452,16 +398,3 @@ async function loadAbout() {
   }
 }
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
-
