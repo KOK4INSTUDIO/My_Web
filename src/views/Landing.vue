@@ -6,7 +6,7 @@
         <div key="video" v-if="currentSlide === 0" class="absolute inset-0">
           <video
                 ref="videoRef"
-                :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video.mp4'"
+                :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video-dekstop.mp4'"
                 autoplay
                 muted
                 playsinline
