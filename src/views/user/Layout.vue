@@ -7,7 +7,7 @@
           <!-- Logo -->
           <div class="flex items-center gap-2">
             <router-link to="/home" class="flex items-center gap-3">
-              <span class="font-display font-bold text-xl text-accent-dark">KOK4INSTUDIO™</span>
+              <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-10 object-contain" />
             </router-link>
           </div>
           
