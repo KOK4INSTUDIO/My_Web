@@ -4,14 +4,43 @@
     <section class="relative bg-white overflow-hidden h-screen hero-section">
       <!-- Carousel Container -->
       <div class="relative w-full h-full overflow-hidden">
-        <!-- Slide 1: Page01.png -->
-        <div class="absolute inset-0">
-          <img
-            src="/asset/Page01.png"
-            alt="Hero Image 1"
-            class="w-full h-full object-cover object-[35%_center] md:object-center"
-          />
-        </div>
+        <transition name="fade" mode="out-in">
+          <div :key="currentSlide" class="absolute inset-0">
+            <img
+              :src="slides[currentSlide].src"
+              :alt="slides[currentSlide].alt"
+              class="w-full h-full object-cover object-[35%_center] md:object-center"
+            />
+          </div>
+        </transition>
+      </div>
+      
+      <!-- Navigation Arrows -->
+      <button
+        @click="prevSlide"
+        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <button
+        @click="nextSlide"
+        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+      
+      <!-- Indicators -->
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        <button
+          v-for="(slide, index) in slides"
+          :key="index"
+          @click="currentSlide = index"
+          :class="['w-2 h-2 rounded-full transition-all duration-300', currentSlide === index ? 'bg-white w-8' : 'bg-white/50']"
+        ></button>
       </div>
       
       <!-- Overlay -->
@@ -288,13 +317,40 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { supabase } from '@/lib/supabase'
 
 const products = ref([])
 const banners = ref([])
 const currentProductSlide = ref(0)
 const PRODUCTS_PER_SLIDE = 4
+const currentSlide = ref(0)
+const slides = ref([
+  { src: '/asset/Page01.png', alt: 'Hero Image 1' },
+  { src: '/asset/Page01.png', alt: 'Hero Image 2' },
+  { src: '/asset/Page01.png', alt: 'Hero Image 3' }
+])
+let autoSlideTimer = null
+
+function nextSlide() {
+  currentSlide.value = (currentSlide.value + 1) % slides.value.length
+}
+
+function prevSlide() {
+  currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length
+}
+
+function startAutoSlide() {
+  autoSlideTimer = setInterval(() => {
+    nextSlide()
+  }, 5000)
+}
+
+function stopAutoSlide() {
+  if (autoSlideTimer) {
+    clearInterval(autoSlideTimer)
+  }
+}
 
 const categories = ref([
   { id: 1, name: 'Aksesoris', slug: 'aksesoris' },
@@ -318,6 +374,11 @@ onMounted(async () => {
   await loadProducts()
   await loadAbout()
   await loadBanners()
+  startAutoSlide()
+})
+
+onUnmounted(() => {
+  stopAutoSlide()
 })
 
 async function loadBanners() {
@@ -391,4 +452,16 @@ async function loadAbout() {
   }
 }
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
 
