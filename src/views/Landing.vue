@@ -11,7 +11,7 @@
             muted
             playsinline
             preload="auto"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover object-center"
             @ended="onVideoEnded"
           />
         </div>
@@ -19,7 +19,7 @@
           <img
             src="/asset/Page01.png"
             alt="Carousel Image"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover object-center"
           />
         </div>
       </transition>
