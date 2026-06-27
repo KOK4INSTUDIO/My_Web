@@ -4,7 +4,7 @@
     <section class="relative bg-white overflow-hidden h-screen hero-section">
       <div class="absolute inset-0">
         <img
-          src="/asset/img1.jpg"
+          src="/asset/Page01.png"
           alt="Hero Image"
           class="w-full h-full object-cover object-center"
         />
