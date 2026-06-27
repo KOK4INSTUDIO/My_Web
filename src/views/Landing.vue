@@ -2,26 +2,24 @@
   <div>
     <!-- Hero Carousel Section (Full Screen) -->
     <section class="relative bg-white overflow-hidden h-screen">
-      <transition name="fade" mode="out-in">
-        <div v-if="currentSlide === 0" key="video" class="absolute inset-0">
-          <video
-            ref="videoRef"
-            src="/asset/6DTK.mp4"
-            autoplay
-            muted
-            playsinline
-            class="w-full h-full object-cover"
-            @ended="onVideoEnded"
-          />
-        </div>
-        <div v-else key="image" class="absolute inset-0">
-          <img
-            src="/asset/Page01.png"
-            alt="Carousel Image"
-            class="w-full h-full object-cover"
-          />
-        </div>
-      </transition>
+      <div v-if="currentSlide === 0" class="absolute inset-0">
+        <video
+          ref="videoRef"
+          src="/asset/6DTK.mp4"
+          autoplay
+          muted
+          playsinline
+          class="w-full h-full object-cover"
+          @ended="onVideoEnded"
+        />
+      </div>
+      <div v-else class="absolute inset-0">
+        <img
+          src="/asset/Page01.png"
+          alt="Carousel Image"
+          class="w-full h-full object-cover"
+        />
+      </div>
       
       <!-- Overlay Hitam Transparan -->
       <div class="absolute inset-0 bg-black/35"></div>
@@ -321,7 +319,7 @@ function onVideoEnded() {
       videoRef.value.currentTime = 0
       videoRef.value.play()
     }
-  }, 5000)
+  }, 30000)
 }
 
 onBeforeUnmount(() => {
@@ -401,15 +399,3 @@ async function loadAbout() {
   }
 }
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1.2s ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
