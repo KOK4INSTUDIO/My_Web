@@ -46,11 +46,11 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <router-link to="/user/login" class="flex items-center justify-center gap-3 px-10 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold hover:from-primary-700 hover:to-primary-800 transition-all rounded-xl shadow-red hover:shadow-xl transform hover:-translate-y-0.5">
-              <img src="/asset/login-icon.png" alt="Login" class="h-6 w-6 object-contain" />
+              <span class="material-icons-round">login</span>
               Masuk Sekarang
             </router-link>
             <router-link to="/user/register" class="flex items-center justify-center gap-3 px-10 py-4 border-2 border-primary-500 text-primary-700 font-bold hover:bg-primary-50 transition-all rounded-xl">
-              <img src="/asset/register-icon.png" alt="Register" class="h-6 w-6 object-contain" />
+              <span class="material-icons-round">person_add</span>
               Daftar Gratis
             </router-link>
           </div>
@@ -208,11 +208,11 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
         <p class="text-white/80 mb-8">Daftar sekarang dan temukan koleksi terbaik untuk gaya Anda!</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
           <router-link to="/user/register" class="flex items-center justify-center gap-3 px-8 py-3 bg-white text-primary-700 font-bold hover:bg-gray-100 transition-all rounded-xl">
-            <img src="/asset/register-icon.png" alt="Register" class="h-5 w-5 object-contain" style="filter: brightness(0) saturate(100%) invert(16%) sepia(88%) saturate(6395%) hue-rotate(353deg) brightness(92%) contrast(106%);" />
+            <span class="material-icons-round">person_add</span>
             Daftar Sekarang
           </router-link>
           <router-link to="/user/login" class="flex items-center justify-center gap-3 px-8 py-3 border-2 border-white text-white font-bold hover:bg-white/10 transition-all rounded-xl">
-            <img src="/asset/login-icon.png" alt="Login" class="h-5 w-5 object-contain invert" />
+            <span class="material-icons-round">login</span>
             Masuk
           </router-link>
         </div>

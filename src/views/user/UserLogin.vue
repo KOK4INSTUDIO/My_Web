@@ -70,7 +70,7 @@
               class="w-full flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold rounded-xl hover:from-primary-600 hover:to-primary-700 transition-all shadow-red hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none disabled:shadow-none"
             >
               <span v-if="authStore.loading" class="material-icons-round animate-spin">refresh</span>
-              <img v-else src="/asset/login-icon.png" alt="Login" class="h-6 w-6 object-contain invert" />
+              <span v-else class="material-icons-round">login</span>
               {{ authStore.loading ? 'Memproses...' : 'Masuk' }}
             </button>
           </form>
