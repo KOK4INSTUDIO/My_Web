@@ -2,12 +2,16 @@
   <div>
     <!-- Hero Section (Full Screen) -->
     <section class="relative bg-white overflow-hidden h-screen hero-section">
-      <div class="absolute inset-0">
-        <img
-          src="/asset/Page01.png"
-          alt="Hero Image"
-          class="w-full h-full object-cover object-center"
-        />
+      <!-- Carousel Container -->
+      <div class="relative w-full h-full overflow-hidden">
+        <!-- Slide 1: Page01.png -->
+        <div class="absolute inset-0">
+          <img
+            src="/asset/Page01.png"
+            alt="Hero Image 1"
+            class="w-full h-full object-cover object-[35%_center] md:object-center"
+          />
+        </div>
       </div>
       
       <!-- Overlay -->
