@@ -1,31 +1,30 @@
 <template>
   <div>
-    <!-- Auto Carousel Section (Full Width) -->
-    <section class="relative bg-white overflow-hidden">
-      <div 
-        class="aspect-[21/9] relative overflow-hidden"
-      >
-        <!-- Carousel Images -->
-        <div 
-          class="flex h-full transition-transform duration-500 ease-out"
-          :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
-        >
-          <div 
-            v-for="(slide, idx) in carouselSlides" 
-            :key="idx"
-            class="min-w-full h-full bg-cover bg-center"
-            :style="{ backgroundImage: `url(${slide})` }"
-          >
-            <!-- Gradient Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          </div>
+    <!-- Hero Carousel Section (Full Screen) -->
+    <section class="relative bg-white overflow-hidden h-screen">
+      <transition name="fade" mode="out-in">
+        <div v-if="currentSlide === 0" key="video" class="absolute inset-0">
+          <video
+            ref="videoRef"
+            src="/asset/6DTK.mp4"
+            autoplay
+            muted
+            playsinline
+            class="w-full h-full object-cover"
+            @ended="onVideoEnded"
+          />
         </div>
-
-        <!-- Navigation Dots -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3">
-    
+        <div v-else key="image" class="absolute inset-0">
+          <img
+            src="/asset/Page01.png"
+            alt="Carousel Image"
+            class="w-full h-full object-cover"
+          />
         </div>
-      </div>
+      </transition>
+      
+      <!-- Overlay Hitam Transparan -->
+      <div class="absolute inset-0 bg-black/35"></div>
     </section>
 
     <!-- Hero Section -->
@@ -279,18 +278,16 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { supabase } from '@/lib/supabase'
 
 const products = ref([])
 const banners = ref([])
 const currentSlide = ref(0)
-const carouselSlides = ref([
-  '/asset/Page01.png',
-])
+const videoRef = ref(null)
+let imageTimer = null
 const currentProductSlide = ref(0)
 const PRODUCTS_PER_SLIDE = 4
-let carouselInterval = null
 
 const categories = ref([
   { id: 1, name: 'Aksesoris', slug: 'aksesoris' },
@@ -314,16 +311,22 @@ onMounted(async () => {
   await loadProducts()
   await loadAbout()
   await loadBanners()
-  
-  // Auto slide every 3 seconds
-  carouselInterval = setInterval(() => {
-    currentSlide.value = (currentSlide.value + 1) % carouselSlides.value.length
-  }, 3000)
 })
 
-onUnmounted(() => {
-  if (carouselInterval) {
-    clearInterval(carouselInterval)
+function onVideoEnded() {
+  currentSlide.value = 1
+  imageTimer = setTimeout(() => {
+    currentSlide.value = 0
+    if (videoRef.value) {
+      videoRef.value.currentTime = 0
+      videoRef.value.play()
+    }
+  }, 5000)
+}
+
+onBeforeUnmount(() => {
+  if (imageTimer) {
+    clearTimeout(imageTimer)
   }
 })
 
@@ -398,3 +401,15 @@ async function loadAbout() {
   }
 }
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.2s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
