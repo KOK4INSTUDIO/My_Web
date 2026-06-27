@@ -2,21 +2,13 @@
   <div>
     <!-- Hero Section (Full Screen) -->
     <section class="relative bg-white overflow-hidden h-screen hero-section">
-      <div v-if="currentSlide === 0" class="absolute inset-0">
+      <div class="absolute inset-0">
         <video
-          ref="videoRef"
           src="/asset/6DTK.mp4"
           autoplay
           muted
+          loop
           playsinline
-          class="w-full h-full object-cover"
-          @ended="onVideoEnded"
-        />
-      </div>
-      <div v-else class="absolute inset-0">
-        <img
-          src="/asset/Page01.png"
-          alt="Carousel Image"
           class="w-full h-full object-cover"
         />
       </div>
@@ -45,28 +37,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
-
-const currentSlide = ref(0)
-const videoRef = ref(null)
-let imageTimer = null
-
-function onVideoEnded() {
-  currentSlide.value = 1
-  imageTimer = setTimeout(() => {
-    currentSlide.value = 0
-    if (videoRef.value) {
-      videoRef.value.currentTime = 0
-      videoRef.value.play()
-    }
-  }, 30000)
-}
-
-onBeforeUnmount(() => {
-  if (imageTimer) {
-    clearTimeout(imageTimer)
-  }
-})
+// Tidak ada script yang dibutuhkan
 </script>
 
 <style scoped>
