@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Hero Carousel Section (Full Screen) -->
-    <section class="relative bg-white overflow-hidden h-screen">
+    <section class="relative bg-white overflow-hidden h-screen hero-section">
       <div v-if="currentSlide === 0" class="absolute inset-0">
         <video
           ref="videoRef"
@@ -23,34 +23,24 @@
       
       <!-- Overlay Hitam Transparan -->
       <div class="absolute inset-0 bg-black/35"></div>
-    </section>
-
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-primary-50 to-white py-16 md:py-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <div class="flex items-center justify-center gap-3 mb-8">
-            <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-20 md:h-32 object-contain" />
-          </div>
-          <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
-          <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
-            Mari Berkolaborasi
-          </h1>
-          <p class="text-accent-gray text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Jangan hanya memakai produk yang sama dengan orang lain. Tambahkan sentuhan pribadi melalui layanan custom KOK4INSTUDIO™.
-
-Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <router-link to="/user/login" class="flex items-center justify-center gap-3 px-10 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold hover:from-primary-700 hover:to-primary-800 transition-all rounded-xl shadow-red hover:shadow-xl transform hover:-translate-y-0.5">
-              <span class="material-icons-round">login</span>
-              Masuk Sekarang
-            </router-link>
-            <router-link to="/user/register" class="flex items-center justify-center gap-3 px-10 py-4 border-2 border-primary-500 text-primary-700 font-bold hover:bg-primary-50 transition-all rounded-xl">
-              <span class="material-icons-round">person_add</span>
-              Daftar Gratis
-            </router-link>
-          </div>
+      
+      <!-- Hero Content di Tengah -->
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
+        <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-24 md:h-32 object-contain mb-6 invert" />
+        <p class="text-white/90 text-sm font-medium uppercase tracking-wider mb-3">MAKE IT YOURS</p>
+        <h1 class="font-display text-3xl md:text-5xl font-bold text-white mb-4">Mari Berkolaborasi</h1>
+        <p class="text-white/80 text-base md:text-lg max-w-2xl mb-8">
+          Tambahkan sentuhan pribadi melalui layanan custom KOK4INSTUDIO™
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <router-link to="/user/login" class="flex items-center justify-center gap-2 px-8 py-3 bg-white text-primary-700 font-bold hover:bg-gray-100 transition-all rounded-xl">
+            <span class="material-icons-round text-lg">login</span>
+            Masuk Sekarang
+          </router-link>
+          <router-link to="/user/register" class="flex items-center justify-center gap-2 px-8 py-3 border-2 border-white text-white font-bold hover:bg-white/10 transition-all rounded-xl">
+            <span class="material-icons-round text-lg">person_add</span>
+            Daftar Gratis
+          </router-link>
         </div>
       </div>
     </section>
@@ -401,13 +391,9 @@ async function loadAbout() {
 </script>
 
 <style scoped>
-/* Memastikan video dan gambar responsif di semua ukuran layar */
-section {
-  position: relative;
-}
-
-section video,
-section img {
+/* Memastikan video dan gambar responsif di hero section saja */
+.hero-section video,
+.hero-section img {
   position: absolute;
   top: 0;
   left: 0;
@@ -415,13 +401,5 @@ section img {
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-
-/* Pastikan di mobile, carousel tetap full height */
-@media (max-width: 768px) {
-  section {
-    min-height: 100vh;
-    height: 100vh;
-  }
 }
 </style>
