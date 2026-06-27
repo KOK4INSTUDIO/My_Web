@@ -32,9 +32,6 @@
     <section class="bg-gradient-to-br from-primary-50 to-white py-16 md:py-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <div class="flex items-center justify-center gap-3 mb-8">
-            <span class="font-display text-3xl font-bold text-accent-dark">KOK4INSTUDIO™</span>
-          </div>
           <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
           <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
             Mari Berkolaborasi
