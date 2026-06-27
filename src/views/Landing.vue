@@ -399,3 +399,29 @@ async function loadAbout() {
   }
 }
 </script>
+
+<style scoped>
+/* Memastikan video dan gambar responsif di semua ukuran layar */
+section {
+  position: relative;
+}
+
+section video,
+section img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Pastikan di mobile, carousel tetap full height */
+@media (max-width: 768px) {
+  section {
+    min-height: 100vh;
+    height: 100vh;
+  }
+}
+</style>
