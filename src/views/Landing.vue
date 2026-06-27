@@ -2,16 +2,27 @@
   <div>
     <!-- Hero Section (Full Screen) -->
     <section class="relative bg-white overflow-hidden h-screen hero-section">
-      <div class="absolute inset-0">
-        <video
-          src="/asset/video.mp4"
-          autoplay
-          muted
-          loop
-          playsinline
-          class="w-full h-full object-cover"
-        />
-      </div>
+      <transition name="fade" mode="out-in">
+        <div key="video" v-if="currentSlide === 0" class="absolute inset-0">
+          <video
+            ref="videoRef"
+            :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video.mp4'"
+            autoplay
+            muted
+            playsinline
+            preload="auto"
+            class="w-full h-full object-cover"
+            @ended="onVideoEnded"
+          />
+        </div>
+        <div key="image" v-else class="absolute inset-0">
+          <img
+            src="/asset/Page01.png"
+            alt="Carousel Image"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </transition>
       
       <!-- Overlay -->
       <div class="absolute inset-0 bg-black/35"></div>
@@ -268,13 +279,41 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
 import { supabase } from '@/lib/supabase'
 
 const products = ref([])
 const banners = ref([])
 const currentProductSlide = ref(0)
 const PRODUCTS_PER_SLIDE = 4
+const currentSlide = ref(0)
+const isMobile = ref(window.innerWidth < 768)
+const videoRef = ref(null)
+let imageTimer = null
+
+function handleResize() {
+  isMobile.value = window.innerWidth < 768
+}
+
+function onVideoEnded() {
+  currentSlide.value = 1
+  imageTimer = setTimeout(() => {
+    currentSlide.value = 0
+    nextTick(() => {
+      if (videoRef.value) {
+        videoRef.value.currentTime = 0
+        videoRef.value.play()
+      }
+    })
+  }, 5000)
+}
+
+watch(currentSlide, (newSlide) => {
+  if (newSlide === 0 && videoRef.value) {
+    videoRef.value.currentTime = 0
+    videoRef.value.play()
+  }
+})
 
 const categories = ref([
   { id: 1, name: 'Aksesoris', slug: 'aksesoris' },
@@ -298,6 +337,14 @@ onMounted(async () => {
   await loadProducts()
   await loadAbout()
   await loadBanners()
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+  if (imageTimer) {
+    clearTimeout(imageTimer)
+  }
 })
 
 async function loadBanners() {
@@ -371,3 +418,15 @@ async function loadAbout() {
   }
 }
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
