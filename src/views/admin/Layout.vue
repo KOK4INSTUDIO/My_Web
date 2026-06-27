@@ -8,16 +8,12 @@
       :class="[sidebarOpen ? 'w-64' : 'w-20']"
     >
       <!-- Logo Area -->
-      <div class="p-5 border-b border-primary-100 flex items-center gap-3">
+      <div class="p-5 border-b border-primary-100 flex items-center justify-center">
         <img
           src="/asset/logo.png"
           alt="KOK4INSTUDIO"
-          class="h-8 object-contain"
+          class="h-10 object-contain"
         />
-        <div v-if="sidebarOpen">
-          <h1 class="font-display text-base font-bold text-accent-dark">KOK4INSTUDIO™</h1>
-          <p class="text-[10px] text-accent-gray">Admin</p>
-        </div>
       </div>
       
       <!-- Navigation -->
