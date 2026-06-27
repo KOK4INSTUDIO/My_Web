@@ -5,15 +5,15 @@
       <transition name="fade" mode="out-in">
         <div key="video" v-if="currentSlide === 0" class="absolute inset-0">
           <video
-            ref="videoRef"
-            :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video.mp4'"
-            autoplay
-            muted
-            playsinline
-            preload="auto"
-            class="w-full h-full object-cover object-center"
-            @ended="onVideoEnded"
-          />
+                ref="videoRef"
+                :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video.mp4'"
+                autoplay
+                muted
+                playsinline
+                preload="auto"
+                class="w-full h-full object-cover object-[35%_center] md:object-center"
+                @ended="onVideoEnded"
+              />
         </div>
         <div key="image" v-else class="absolute inset-0">
           <img

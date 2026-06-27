@@ -5,15 +5,15 @@
       <transition name="fade" mode="out-in">
         <div key="video" v-if="currentSlide === 0" class="absolute inset-0">
           <video
-            ref="videoRef"
-            :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video.mp4'"
-            autoplay
-            muted
-            playsinline
-            preload="auto"
-            class="w-full h-full object-cover object-center"
-            @ended="onVideoEnded"
-          />
+                ref="videoRef"
+                :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video.mp4'"
+                autoplay
+                muted
+                playsinline
+                preload="auto"
+                class="w-full h-full object-cover object-[35%_center] md:object-center"
+                @ended="onVideoEnded"
+              />
         </div>
         <div key="image" v-else class="absolute inset-0">
           <img
@@ -92,10 +92,9 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
               <!-- Each slide shows 4 products on lg, 2 on sm, 1 on xs -->
               <div v-for="slideIndex in totalProductSlides" :key="slideIndex" class="min-w-full">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                  <router-link
+                  <div
                     v-for="product in getProductsForSlide(slideIndex - 1)"
                     :key="product.id"
-                    to="/user/login"
                     class="group"
                   >
                     <div class="aspect-square bg-white border border-primary-100 rounded-xl mb-4 overflow-hidden shadow-soft group-hover:shadow-red transition-all">
@@ -110,7 +109,7 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
                     </div>
                     <p class="text-accent-gray text-xs mb-1">{{ product.category?.name || 'Aksesori' }}</p>
                     <h3 class="font-medium text-accent-dark mb-1">{{ product.name }}</h3>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 mb-3">
                       <p class="text-primary-600 font-bold">
                         Rp {{ (product.promo_price || product.price)?.toLocaleString() }}
                       </p>
@@ -118,7 +117,30 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
                         Rp {{ product.price?.toLocaleString() }}
                       </p>
                     </div>
-                  </router-link>
+                    <!-- Shop Links -->
+                    <div class="flex gap-2">
+                      <a
+                        v-if="product.tiktok_url"
+                        :href="product.tiktok_url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-1 px-3 py-1.5 bg-gray-900 text-white rounded-lg text-xs font-medium hover:bg-gray-800 transition-colors"
+                      >
+                        <span class="material-icons-round text-sm">play_circle</span>
+                        TikTok
+                      </a>
+                      <a
+                        v-if="product.shopee_url"
+                        :href="product.shopee_url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-1 px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs font-medium hover:bg-orange-600 transition-colors"
+                      >
+                        <span class="material-icons-round text-sm">shopping_cart</span>
+                        Shopee
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

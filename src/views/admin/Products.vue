@@ -304,6 +304,21 @@
             </button>
           </div>
 
+          <!-- Social/Shop Links -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Link Toko & Sosial</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">TikTok URL</label>
+                <input v-model="form.tiktok_url" type="url" placeholder="https://tiktok.com/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Shopee URL</label>
+                <input v-model="form.shopee_url" type="url" placeholder="https://shopee.co.id/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
+              </div>
+            </div>
+          </div>
+
           <!-- Status -->
           <div class="space-y-3">
             <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Status</h4>
@@ -373,7 +388,9 @@ const form = ref({
   status: 'draft',
   is_featured: false,
   variants: [],
-  specifications: []
+  specifications: [],
+  tiktok_url: '',
+  shopee_url: ''
 })
 
 const variantTypes = ref([
@@ -613,7 +630,9 @@ async function saveProduct() {
       gallery: form.value.gallery,
       status: form.value.status,
       is_featured: form.value.is_featured,
-      specifications: validSpecifications.length > 0 ? validSpecifications : []
+      specifications: validSpecifications.length > 0 ? validSpecifications : [],
+      tiktok_url: form.value.tiktok_url || '',
+      shopee_url: form.value.shopee_url || ''
     }
     
     // Only add variants if there are any
@@ -697,7 +716,9 @@ function editProduct(product) {
     status: product.status,
     is_featured: product.is_featured,
     variants: product.variants || [],
-    specifications: product.specifications || []
+    specifications: product.specifications || [],
+    tiktok_url: product.tiktok_url || '',
+    shopee_url: product.shopee_url || ''
   }
   showModal.value = true
 }
@@ -719,7 +740,9 @@ function resetForm() {
     status: 'draft',
     is_featured: false,
     variants: [],
-    specifications: []
+    specifications: [],
+    tiktok_url: '',
+    shopee_url: ''
   }
   editingId.value = null
 }
