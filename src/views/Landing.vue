@@ -33,7 +33,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <div class="flex items-center justify-center gap-3 mb-8">
-            <span class="font-display text-3xl font-bold text-accent-dark">KOK4INSTUDIO™</span>
+            <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-20 md:h-32 object-contain" />
           </div>
           <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
           <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
@@ -45,10 +45,12 @@
 Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <router-link to="/user/login" class="px-10 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold hover:from-primary-700 hover:to-primary-800 transition-all rounded-xl shadow-red hover:shadow-xl transform hover:-translate-y-0.5">
+            <router-link to="/user/login" class="flex items-center justify-center gap-3 px-10 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold hover:from-primary-700 hover:to-primary-800 transition-all rounded-xl shadow-red hover:shadow-xl transform hover:-translate-y-0.5">
+              <img src="/asset/login-icon.png" alt="Login" class="h-6 w-6 object-contain" />
               Masuk Sekarang
             </router-link>
-            <router-link to="/user/register" class="px-10 py-4 border-2 border-primary-500 text-primary-700 font-bold hover:bg-primary-50 transition-all rounded-xl">
+            <router-link to="/user/register" class="flex items-center justify-center gap-3 px-10 py-4 border-2 border-primary-500 text-primary-700 font-bold hover:bg-primary-50 transition-all rounded-xl">
+              <img src="/asset/register-icon.png" alt="Register" class="h-6 w-6 object-contain" />
               Daftar Gratis
             </router-link>
           </div>
@@ -199,13 +201,18 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
     <!-- Footer / CTA -->
     <section class="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16 md:py-20 shadow-red">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="flex items-center justify-center gap-3 mb-8">
+          <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-16 md:h-24 object-contain invert" />
+        </div>
         <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">Siap Memulai?</h2>
         <p class="text-white/80 mb-8">Daftar sekarang dan temukan koleksi terbaik untuk gaya Anda!</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <router-link to="/user/register" class="px-8 py-3 bg-white text-primary-700 font-bold hover:bg-gray-100 transition-all rounded-xl">
+          <router-link to="/user/register" class="flex items-center justify-center gap-3 px-8 py-3 bg-white text-primary-700 font-bold hover:bg-gray-100 transition-all rounded-xl">
+            <img src="/asset/register-icon.png" alt="Register" class="h-5 w-5 object-contain" style="filter: brightness(0) saturate(100%) invert(16%) sepia(88%) saturate(6395%) hue-rotate(353deg) brightness(92%) contrast(106%);" />
             Daftar Sekarang
           </router-link>
-          <router-link to="/user/login" class="px-8 py-3 border-2 border-white text-white font-bold hover:bg-white/10 transition-all rounded-xl">
+          <router-link to="/user/login" class="flex items-center justify-center gap-3 px-8 py-3 border-2 border-white text-white font-bold hover:bg-white/10 transition-all rounded-xl">
+            <img src="/asset/login-icon.png" alt="Login" class="h-5 w-5 object-contain invert" />
             Masuk
           </router-link>
         </div>

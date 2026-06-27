@@ -16,8 +16,8 @@
           
           <!-- Header -->
           <div class="text-center mb-8">
-            <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-red">
-              <span class="material-icons-round text-white text-4xl">login</span>
+            <div class="flex items-center justify-center mx-auto mb-4">
+              <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-24 object-contain" />
             </div>
             <h1 class="font-display text-3xl font-bold text-accent-dark">
               Masuk ke Akun
@@ -70,7 +70,7 @@
               class="w-full flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold rounded-xl hover:from-primary-600 hover:to-primary-700 transition-all shadow-red hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none disabled:shadow-none"
             >
               <span v-if="authStore.loading" class="material-icons-round animate-spin">refresh</span>
-              <span v-else class="material-icons-round">login</span>
+              <img v-else src="/asset/login-icon.png" alt="Login" class="h-6 w-6 object-contain invert" />
               {{ authStore.loading ? 'Memproses...' : 'Masuk' }}
             </button>
           </form>
