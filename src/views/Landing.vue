@@ -1,56 +1,56 @@
 <template>
   <div>
-    <!-- Hero Section (Full Screen) -->
-    <section class="relative bg-white overflow-hidden h-screen hero-section">
-      <transition name="fade" mode="out-in">
-        <div key="video" v-if="currentSlide === 0" class="absolute inset-0">
-          <video
-                ref="videoRef"
-                :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video-dekstop.mp4'"
-                autoplay
-                muted
-                playsinline
-                preload="auto"
-                class="w-full h-full object-cover object-[35%_center] md:object-center"
-                @ended="onVideoEnded"
-              />
-        </div>
-        <div key="image" v-else class="absolute inset-0">
-          <img
-            src="/asset/Page01.png"
-            alt="Carousel Image"
-            class="w-full h-full object-cover object-center"
-          />
-        </div>
-      </transition>
-      
-      <!-- Overlay -->
-      <div class="absolute inset-0 bg-black/35"></div>
-    </section>
-
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-primary-50 to-white py-16 md:py-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
-          <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
-            Mari Berkolaborasi
-          </h1>
-          <p class="text-accent-gray text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Jangan hanya memakai produk yang sama dengan orang lain. Tambahkan sentuhan pribadi melalui layanan custom KOK4INSTUDIO™.
-
-Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <router-link to="/user/login" class="flex items-center justify-center gap-3 px-10 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold hover:from-primary-700 hover:to-primary-800 transition-all rounded-xl shadow-red hover:shadow-xl transform hover:-translate-y-0.5">
-              <span class="material-icons-round">login</span>
-              Masuk Sekarang
-            </router-link>
-            <router-link to="/user/register" class="flex items-center justify-center gap-3 px-10 py-4 border-2 border-primary-500 text-primary-700 font-bold hover:bg-primary-50 transition-all rounded-xl">
-              <span class="material-icons-round">person_add</span>
-              Daftar Gratis
-            </router-link>
+    <!-- Hero Frame (Container) -->
+    <section class="hero-frame relative w-full h-dvh overflow-hidden">
+      <!-- Media Layer -->
+      <div class="media-layer absolute inset-0">
+        <transition name="fade" mode="out-in">
+          <!-- Video -->
+          <div v-if="currentSlide === 0" key="video" class="absolute inset-0">
+            <video
+              ref="videoRef"
+              :src="isMobile ? '/asset/video-mobile.mp4' : '/asset/video-dekstop.mp4'"
+              autoplay
+              muted
+              playsinline
+              preload="auto"
+              class="w-full h-full object-cover object-[35%_center] md:object-center"
+              @ended="onVideoEnded"
+            />
           </div>
+          <!-- Image -->
+          <div v-else key="image" class="absolute inset-0">
+            <img
+              src="/asset/Page01.png"
+              alt="Carousel Image"
+              class="w-full h-full object-cover object-center"
+            />
+          </div>
+        </transition>
+      </div>
+
+      <!-- Overlay Layer -->
+      <div class="overlay-layer absolute inset-0 bg-black/35"></div>
+
+      <!-- Content Layer -->
+      <div class="content-layer relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+        <p class="text-primary-400 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
+        <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 max-w-3xl mx-auto leading-tight">
+          Mari Berkolaborasi
+        </h1>
+        <p class="text-white/90 text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+          Jangan hanya memakai produk yang sama dengan orang lain. Tambahkan sentuhan pribadi melalui layanan custom KOK4INSTUDIO™.
+          Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <router-link to="/user/login" class="flex items-center justify-center gap-3 px-8 md:px-10 py-3 md:py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold hover:from-primary-700 hover:to-primary-800 transition-all rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            <span class="material-icons-round">login</span>
+            Masuk Sekarang
+          </router-link>
+          <router-link to="/user/register" class="flex items-center justify-center gap-3 px-8 md:px-10 py-3 md:py-4 border-2 border-white text-white font-bold hover:bg-white/10 transition-all rounded-xl">
+            <span class="material-icons-round">person_add</span>
+            Daftar Gratis
+          </router-link>
         </div>
       </div>
     </section>
