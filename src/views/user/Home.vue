@@ -111,7 +111,7 @@ const banners = ref([])
 const categories = ref([])
 const currentSlide = ref(0)
 const carouselSlides = ref([
-  '/asset/Page01.png',
+  '/asset/video.mp4',
 ])
 let carouselInterval = null
 
