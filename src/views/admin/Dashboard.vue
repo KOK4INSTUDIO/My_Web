@@ -1,73 +1,92 @@
 <template>
   <div class="space-y-6 md:space-y-8">
     <!-- Header Card with Gradient -->
-    <div class="bg-white border border-primary-200 rounded-2xl shadow-sm overflow-hidden">
-      <div class="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 px-6 py-8 md:px-8 md:py-10">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden border-0">
+      <div class="bg-gradient-to-br from-primary-600 via-primary-500 to-primary-700 px-6 py-8 md:px-10 md:py-12">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
-            <p class="text-primary-100 text-sm">Hello, Admin!</p>
-            <h2 class="font-display text-2xl md:text-3xl font-bold text-white mt-1">Welcome to KOK4INSTUDIO™</h2>
-            <p class="text-primary-100 text-sm mt-2">Here's what's happening today with your fashion store.</p>
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full mb-3">
+              <span class="material-icons-round text-white text-sm">waving_hand</span>
+              <span class="text-white/90 text-sm font-medium">Hello, Admin!</span>
+            </div>
+            <h2 class="font-display text-2xl md:text-4xl font-bold text-white">Welcome back! 👋</h2>
+            <p class="text-white/80 text-sm md:text-base mt-2">Here's your fashion store dashboard today.</p>
           </div>
-          <button class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all">
-            <span class="material-icons-round text-lg">download</span>
+          <button class="bg-white text-primary-600 hover:bg-primary-50 px-5 py-3 rounded-2xl flex items-center gap-2 transition-all font-semibold shadow-lg hover:shadow-xl">
+            <span class="material-icons-round text-xl">download</span>
             Export Report
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="bg-white border border-primary-200 rounded-2xl shadow-sm p-6">
-      <h3 class="font-semibold text-accent-dark mb-4">Quick Actions</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-        <router-link to="/admin/products" class="flex flex-col items-center gap-2 p-4 bg-primary-50 border border-primary-100 rounded-xl hover:bg-primary-100 transition-all">
-          <span class="material-icons-round text-primary-600 text-2xl">add_circle</span>
-          <span class="text-sm font-medium text-accent-dark">Add Product</span>
-        </router-link>
-        <router-link to="/admin/pre-orders" class="flex flex-col items-center gap-2 p-4 bg-teal-50 border border-teal-100 rounded-xl hover:bg-teal-100 transition-all">
-          <span class="material-icons-round text-teal-600 text-2xl">shopping_cart</span>
-          <span class="text-sm font-medium text-accent-dark">Orders</span>
-        </router-link>
-        <router-link to="/admin/categories" class="flex flex-col items-center gap-2 p-4 bg-blue-50 border border-blue-100 rounded-xl hover:bg-blue-100 transition-all">
-          <span class="material-icons-round text-blue-600 text-2xl">category</span>
-          <span class="text-sm font-medium text-accent-dark">Categories</span>
-        </router-link>
-      </div>
-    </div>
-
     <!-- Stat Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-      <div v-for="(stat, idx) in statCards" :key="idx" class="bg-white border border-primary-200 rounded-2xl shadow-sm p-6 hover:shadow-md transition-all duration-300">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div v-for="(stat, idx) in statCards" :key="idx" class="bg-white rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 p-6 border-0 group hover:-translate-y-1">
         <div class="flex items-start justify-between">
           <div>
-            <p class="text-accent-gray text-sm">{{ stat.label }}</p>
-            <p class="font-display text-2xl md:text-3xl font-bold text-accent-dark mt-1">{{ stat.value }}</p>
-            <div class="flex items-center gap-2 mt-2">
-              <span class="text-xs px-2 py-0.5 rounded-full flex items-center gap-1" :class="stat.trendUp ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
+            <p class="text-gray-500 text-sm font-medium mb-1">{{ stat.label }}</p>
+            <p class="font-display text-3xl md:text-4xl font-bold text-gray-800 mt-1 group-hover:text-primary-600 transition-colors">{{ stat.value }}</p>
+            <div class="flex items-center gap-2 mt-3">
+              <span class="text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-semibold" :class="stat.trendUp ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
                 <span class="material-icons-round text-sm">{{ stat.trendUp ? 'trending_up' : 'trending_down' }}</span>
                 {{ stat.sub }}
               </span>
             </div>
           </div>
-          <div class="w-12 h-12 rounded-xl flex items-center justify-center" :class="stat.bgClass">
-            <span class="material-icons-round text-2xl" :class="stat.iconClass">{{ stat.icon }}</span>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" :class="stat.bgClass">
+            <span class="material-icons-round text-3xl" :class="stat.iconClass">{{ stat.icon }}</span>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-3xl shadow-md p-6 border-0">
+      <h3 class="font-bold text-gray-800 text-lg mb-5 flex items-center gap-2">
+        <span class="material-icons-round text-primary-600 text-2xl">lightbulb</span>
+        Quick Actions
+      </h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <router-link to="/admin/products" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-primary-100">
+          <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-md">
+            <span class="material-icons-round text-white text-2xl">add_circle</span>
+          </div>
+          <span class="text-sm font-bold text-gray-700">Add Product</span>
+        </router-link>
+        <router-link to="/admin/pre-orders" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-teal-100">
+          <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center shadow-md">
+            <span class="material-icons-round text-white text-2xl">shopping_cart</span>
+          </div>
+          <span class="text-sm font-bold text-gray-700">Orders</span>
+        </router-link>
+        <router-link to="/admin/inventory" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-blue-100">
+          <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-md">
+            <span class="material-icons-round text-white text-2xl">inventory</span>
+          </div>
+          <span class="text-sm font-bold text-gray-700">Inventory</span>
+        </router-link>
+        <router-link to="/admin/banners" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-purple-100">
+          <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+            <span class="material-icons-round text-white text-2xl">image</span>
+          </div>
+          <span class="text-sm font-bold text-gray-700">Banners</span>
+        </router-link>
+      </div>
+    </div>
+
     <!-- Low Stock Alert -->
-    <div v-if="lowStockProducts.length > 0" class="bg-amber-50 border border-amber-200 rounded-2xl shadow-sm p-6">
+    <div v-if="lowStockProducts.length > 0" class="bg-gradient-to-r from-amber-50 to-orange-50 border-0 rounded-3xl shadow-md p-6">
       <div class="flex items-start gap-4">
-        <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
-          <span class="material-icons-round text-amber-600 text-2xl">warning</span>
+        <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+          <span class="material-icons-round text-white text-3xl">warning</span>
         </div>
         <div class="flex-1">
-          <h3 class="font-semibold text-accent-dark">Low Stock Alert</h3>
-          <p class="text-sm text-amber-700 mt-1">You have {{ lowStockProducts.length }} product(s) with low stock</p>
-          <div class="flex flex-wrap gap-2 mt-3">
-            <span v-for="product in lowStockProducts" :key="product.id" class="px-3 py-1 bg-white border border-amber-200 rounded-full text-sm">
+          <h3 class="font-bold text-gray-800 text-lg">Low Stock Alert!</h3>
+          <p class="text-sm text-orange-700 mt-1">You have {{ lowStockProducts.length }} product(s) that need restocking soon</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span v-for="product in lowStockProducts" :key="product.id" class="px-4 py-2 bg-white border border-amber-200 rounded-xl text-sm font-medium text-gray-700 shadow-sm">
+              <span class="material-icons-round text-sm text-amber-500 mr-1">inventory_2</span>
               {{ product.name }} - {{ product.stock }} pcs
             </span>
           </div>
@@ -76,66 +95,71 @@
     </div>
 
     <!-- Main Content Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Visitor Chart -->
-      <div class="bg-white border border-primary-200 rounded-2xl shadow-sm lg:col-span-2">
-        <div class="p-4 md:p-6 border-b border-primary-100 flex items-center justify-between">
+      <div class="bg-white rounded-3xl shadow-md lg:col-span-2 border-0 overflow-hidden">
+        <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-gray-50 to-white">
           <div>
-            <h3 class="font-semibold text-accent-dark flex items-center gap-2">
-              <span class="material-icons-round text-primary-600">show_chart</span>
+            <h3 class="font-bold text-gray-800 text-lg flex items-center gap-2">
+              <span class="material-icons-round text-primary-600 text-2xl">show_chart</span>
               Visitor Trends
             </h3>
-            <p class="text-accent-gray text-sm mt-1">Last 7 days performance</p>
+            <p class="text-gray-500 text-sm mt-1">Last 7 days performance</p>
           </div>
-          <select class="text-sm border border-primary-200 rounded-lg px-3 py-2 bg-white text-accent-dark">
+          <select class="text-sm border border-gray-200 rounded-xl px-4 py-2 bg-white text-gray-700 font-medium">
             <option>Last 7 Days</option>
             <option>Last 30 Days</option>
             <option>This Month</option>
           </select>
         </div>
-        <div class="p-4 md:p-6">
+        <div class="p-6">
           <div class="space-y-4">
             <div v-for="(day, i) in visitorData" :key="i" class="flex items-center gap-4">
-              <span class="w-12 text-accent-gray text-xs md:text-sm">{{ day.label }}</span>
-              <div class="flex-1 h-10 bg-primary-50 rounded-xl relative overflow-hidden">
+              <span class="w-12 text-gray-500 text-xs md:text-sm font-semibold">{{ day.label }}</span>
+              <div class="flex-1 h-12 bg-gray-100 rounded-2xl relative overflow-hidden">
                 <div 
-                  class="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl transition-all duration-700"
+                  class="h-full bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 rounded-2xl transition-all duration-1000"
                   :style="{ width: `${(day.value / maxVisitors) * 100}%` }"
-                ></div>
+                >
+                  <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
+                </div>
               </div>
-              <span class="w-12 text-accent-dark font-medium text-xs md:text-sm text-right">{{ day.value }}</span>
+              <span class="w-16 text-gray-800 font-bold text-xs md:text-sm text-right">{{ day.value }} visits</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Recent Activity -->
-      <div class="bg-white border border-primary-200 rounded-2xl shadow-sm">
-        <div class="p-4 md:p-6 border-b border-primary-100 flex items-center justify-between">
+      <div class="bg-white rounded-3xl shadow-md border-0 overflow-hidden">
+        <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-gray-50 to-white">
           <div>
-            <h3 class="font-semibold text-accent-dark flex items-center gap-2">
-              <span class="material-icons-round text-primary-600">notifications</span>
+            <h3 class="font-bold text-gray-800 text-lg flex items-center gap-2">
+              <span class="material-icons-round text-primary-600 text-2xl">notifications</span>
               Recent Activity
             </h3>
           </div>
-          <button class="text-primary-600 hover:text-primary-700 text-sm font-medium">
+          <button class="text-primary-600 hover:text-primary-700 text-sm font-semibold">
             View All
           </button>
         </div>
-        <div class="divide-y divide-primary-100 max-h-[400px] overflow-y-auto">
+        <div class="divide-y divide-gray-100 max-h-[420px] overflow-y-auto">
           <div
             v-for="activity in recentActivities"
             :key="activity.id"
-            class="p-4 md:px-6"
+            class="p-5 hover:bg-gray-50 transition-colors"
           >
-            <div class="flex items-start gap-3">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" :class="activity.bgClass">
-                <span class="material-icons-round text-lg" :class="activity.iconClass">{{ activity.icon }}</span>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-md" :class="activity.bgClass">
+                <span class="material-icons-round text-2xl" :class="activity.iconClass">{{ activity.icon }}</span>
               </div>
               <div class="flex-1 min-w-0">
-                <p class="text-accent-dark text-sm font-medium">{{ activity.title }}</p>
-                <p class="text-accent-gray text-xs mt-0.5">{{ activity.description }}</p>
-                <p class="text-accent-gray/50 text-xs mt-1">{{ activity.time }}</p>
+                <p class="text-gray-800 text-sm font-bold">{{ activity.title }}</p>
+                <p class="text-gray-500 text-xs mt-1">{{ activity.description }}</p>
+                <p class="text-gray-400 text-xs mt-2 flex items-center gap-1">
+                  <span class="material-icons-round text-sm">schedule</span>
+                  {{ activity.time }}
+                </p>
               </div>
             </div>
           </div>
@@ -144,36 +168,39 @@
     </div>
 
     <!-- Top Products -->
-    <div class="grid grid-cols-1 lg:grid-cols-1 gap-4 md:gap-6">
-      <div class="bg-white border border-primary-200 rounded-2xl shadow-sm">
-        <div class="p-4 md:p-6 border-b border-primary-100 flex items-center justify-between">
+    <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
+      <div class="bg-white rounded-3xl shadow-md border-0 overflow-hidden">
+        <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-gray-50 to-white">
           <div>
-            <h3 class="font-semibold text-accent-dark flex items-center gap-2">
-              <span class="material-icons-round text-primary-600">trending_up</span>
+            <h3 class="font-bold text-gray-800 text-lg flex items-center gap-2">
+              <span class="material-icons-round text-primary-600 text-2xl">trending_up</span>
               Top Products
             </h3>
-            <p class="text-accent-gray text-sm mt-1">Your best selling items</p>
+            <p class="text-gray-500 text-sm mt-1">Your most viewed items</p>
           </div>
-          <router-link to="/admin/products" class="text-primary-600 hover:text-primary-700 text-sm font-medium flex items-center gap-1">
+          <router-link to="/admin/products" class="text-primary-600 hover:text-primary-700 text-sm font-semibold flex items-center gap-1">
             View All
             <span class="material-icons-round text-lg">arrow_forward</span>
           </router-link>
         </div>
-        <div class="divide-y divide-primary-100">
+        <div class="divide-y divide-gray-100">
           <div
             v-for="(product, i) in topProducts"
             :key="product.id"
-            class="p-4 md:px-6"
+            class="p-5 hover:bg-gray-50 transition-colors"
           >
-            <div class="flex items-center gap-4">
-              <span class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center text-primary-700 font-semibold shrink-0">
+            <div class="flex items-center gap-5">
+              <span class="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl flex items-center justify-center text-primary-700 font-bold shrink-0 text-lg">
                 {{ i + 1 }}
               </span>
               <div class="flex-1 min-w-0">
-                <p class="font-medium text-accent-dark truncate">{{ product.name }}</p>
-                <p class="text-xs text-accent-gray mt-0.5">{{ product.view_count || 0 }} views</p>
+                <p class="font-bold text-gray-800 truncate">{{ product.name }}</p>
+                <p class="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                  <span class="material-icons-round text-sm">visibility</span>
+                  {{ product.view_count || 0 }} views
+                </p>
               </div>
-              <span class="text-accent-dark font-medium text-sm">
+              <span class="text-gray-800 font-bold text-lg">
                 Rp {{ (product.promo_price || product.price)?.toLocaleString() }}
               </span>
             </div>
