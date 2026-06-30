@@ -49,10 +49,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
-          <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
+          <h2 class="font-display text-3xl md:text-5xl font-bold text-accent-dark mb-6">
             Mari Berkolaborasi
-          </h1>
-          <p class="text-accent-gray text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+          </h2>
+          <p class="text-accent-gray text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
             Jangan hanya memakai produk yang sama dengan orang lain. Tambahkan sentuhan pribadi melalui layanan custom KOK4INSTUDIO™.
 
 Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
@@ -196,14 +196,14 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
     <!-- About Section -->
     <section class="py-16 md:py-20 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="font-display text-2xl md:text-3xl font-bold text-accent-dark mb-6">{{ aboutData.title }}</h2>
-        <p class="text-accent-gray text-lg leading-relaxed mb-6" v-if="aboutData.content1">
+        <h2 class="font-display text-xl md:text-3xl font-bold text-accent-dark mb-6">{{ aboutData.title }}</h2>
+        <p class="text-accent-gray text-base md:text-lg leading-relaxed mb-6" v-if="aboutData.content1">
           {{ aboutData.content1 }}
         </p>
-        <p class="text-accent-gray text-lg leading-relaxed mb-6" v-if="aboutData.content2">
+        <p class="text-accent-gray text-base md:text-lg leading-relaxed mb-6" v-if="aboutData.content2">
           {{ aboutData.content2 }}
         </p>
-        <p class="text-accent-gray text-lg leading-relaxed" v-if="aboutData.content3">
+        <p class="text-accent-gray text-base md:text-lg leading-relaxed" v-if="aboutData.content3">
           {{ aboutData.content3 }}
         </p>
       </div>

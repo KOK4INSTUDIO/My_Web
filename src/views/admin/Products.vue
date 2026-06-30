@@ -2,11 +2,11 @@
   <div class="space-y-6">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <h3 class="font-display text-xl font-bold text-accent-dark">
-        {{ currentCategoryName ? `Products - ${currentCategoryName}` : 'Products' }}
+        {{ currentCategoryName ? `Produk - ${currentCategoryName}` : 'Produk' }}
       </h3>
       <button @click="openAddModal" class="flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-medium hover:from-primary-700 hover:to-primary-800 transition-all shadow-red text-sm rounded-xl">
         <span class="material-icons-round text-lg">add</span>
-        Add Product
+        Tambah Produk
       </button>
     </div>
 
@@ -25,19 +25,19 @@
       <input 
         v-model="searchQuery"
         type="text" 
-        placeholder="Search products..."
+        placeholder="Cari produk..."
         class="flex-1 min-w-48 px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl"
       />
       <select v-model="filterStatus" class="px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm bg-white rounded-xl">
-        <option value="">All Status</option>
+        <option value="">Semua Status</option>
         <option value="draft">Draft</option>
-        <option value="published">Published</option>
+        <option value="published">Diterbitkan</option>
         <option value="best_seller">Best Seller</option>
-        <option value="coming_soon">Coming Soon</option>
-        <option value="out_of_stock">Out of Stock</option>
+        <option value="coming_soon">Segera Hadir</option>
+        <option value="out_of_stock">Habis</option>
       </select>
       <select v-model="filterCategory" class="px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm bg-white rounded-xl">
-        <option value="">All Categories</option>
+        <option value="">Semua Kategori</option>
         <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
       </select>
     </div>
@@ -48,13 +48,13 @@
         <thead>
           <tr class="bg-primary-50 border-b border-primary-100">
             <th class="px-5 py-4 text-left text-xs font-bold text-gray-700"></th>
-            <th class="px-5 py-4 text-left text-xs font-bold text-accent-dark">Product</th>
+            <th class="px-5 py-4 text-left text-xs font-bold text-accent-dark">Produk</th>
             <th class="px-5 py-4 text-left text-xs font-bold text-gray-700 hidden md:table-cell">SKU</th>
-            <th class="px-5 py-4 text-left text-xs font-bold text-gray-700 hidden md:table-cell">Category</th>
-            <th class="px-5 py-4 text-left text-xs font-bold text-accent-dark">Price</th>
-            <th class="px-5 py-4 text-left text-xs font-bold text-accent-dark">Stock</th>
+            <th class="px-5 py-4 text-left text-xs font-bold text-gray-700 hidden md:table-cell">Kategori</th>
+            <th class="px-5 py-4 text-left text-xs font-bold text-accent-dark">Harga</th>
+            <th class="px-5 py-4 text-left text-xs font-bold text-accent-dark">Stok</th>
             <th class="px-5 py-4 text-left text-xs font-bold text-accent-dark">Status</th>
-            <th class="px-5 py-4 text-right text-xs font-bold text-accent-dark">Actions</th>
+            <th class="px-5 py-4 text-right text-xs font-bold text-accent-dark">Aksi</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
@@ -62,7 +62,7 @@
             <td class="px-5 py-4">
               <div class="w-10 h-10 bg-primary-50 border border-primary-100 rounded-xl flex items-center justify-center overflow-hidden">
                 <span v-if="product.gallery && product.gallery[0]" class="w-full h-full bg-cover bg-center" :style="{ backgroundImage: 'url(' + getThumbnailUrl(product.gallery[0]) + ')' }"></span>
-                <span v-else class="material-icons-round text-gray-400 text-base">image</span>
+                <span v-else class="material-icons-round text-gray-300 text-base">image</span>
               </div>
             </td>
             <td class="px-5 py-4">
@@ -73,7 +73,7 @@
             <td class="px-5 py-4 text-gray-600 text-xs hidden md:table-cell">{{ product.category ? product.category.name : '-' }}</td>
             <td class="px-5 py-4">
               <p class="text-primary-600 font-bold text-sm">Rp {{ (product.promo_price || product.price).toLocaleString() }}</p>
-              <p v-if="product.promo_price" class="text-gray-400 text-xs line-through hidden md:block">Rp {{ product.price.toLocaleString() }}</p>
+              <p v-if="product.promo_price" class="text-gray-400 text-sm line-through hidden md:block">Rp {{ product.price.toLocaleString() }}</p>
             </td>
             <td class="px-5 py-4 text-sm" :class="{ 'text-primary-600 font-bold': product.stock < 10 }">
               {{ product.stock }}
@@ -96,8 +96,8 @@
           </tr>
           <tr v-if="filteredProducts.length === 0">
             <td colspan="8" class="px-6 py-12 text-center">
-              <span class="material-icons-round text-5xl mb-3 block text-gray-300">inventory</span>
-              <p class="text-gray-500 text-sm">No products found. Add your first product!</p>
+              <span class="material-icons-round text-6xl mb-4 block text-gray-300">inventory</span>
+              <p class="text-gray-500 text-sm">Produk tidak ditemukan. Tambahkan produk pertama Anda!</p>
             </td>
           </tr>
         </tbody>
@@ -110,7 +110,7 @@
         <div class="p-5 border-b border-primary-100 flex items-center justify-between sticky top-0 bg-white z-10">
           <h3 class="font-bold text-accent-dark flex items-center gap-2">
             <span class="material-icons-round text-primary-600">inventory_2</span>
-            {{ editingId ? 'Edit Product' : 'Add Product' }}
+            {{ editingId ? 'Edit Produk' : 'Tambah Produk' }}
           </h3>
           <button @click="showModal = false" class="text-gray-400 hover:text-primary-600 hover:bg-primary-50 p-1.5 rounded-full transition-all">
             <span class="material-icons-round">close</span>
@@ -131,10 +131,10 @@
           <form @submit.prevent="saveProduct" class="p-5 space-y-5">
           <!-- Basic Info -->
           <div class="space-y-3">
-            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Basic Information</h4>
+            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Informasi Dasar</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div class="md:col-span-2">
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">Product Name *</label>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Nama Produk *</label>
                 <input v-model="form.name" type="text" required @input="generateSlug" class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
               </div>
               <div class="md:col-span-2">
@@ -142,45 +142,64 @@
                 <input v-model="form.slug" type="text" required class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
               </div>
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">SKU (auto)</label>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">SKU (otomatis)</label>
                 <input v-model="form.sku" type="text" class="w-full px-4 py-2.5 border-2 border-gray-200 bg-primary-50 text-gray-500 text-sm rounded-xl" readonly />
               </div>
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">Category</label>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Kategori</label>
                 <select v-model="form.category_id" class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm bg-white rounded-xl">
-                  <option :value="null">Select category...</option>
+                  <option :value="null">Pilih kategori...</option>
                   <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
                 </select>
               </div>
             </div>
             <div>
-              <label class="block text-xs font-bold text-gray-700 mb-1.5">Description</label>
+              <label class="block text-xs font-bold text-gray-700 mb-1.5">Deskripsi</label>
               <textarea v-model="form.description" rows="2" class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
             </div>
           </div>
 
           <!-- Pricing -->
           <div class="space-y-3">
-            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Pricing & Stock</h4>
+            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Harga & Stok</h4>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">Price *</label>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Harga *</label>
                 <input v-model.number="form.price" type="number" required min="0" class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
               </div>
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">Promo Price</label>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Harga Promo</label>
                 <input v-model.number="form.promo_price" type="number" min="0" class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
               </div>
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">Stock *</label>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Stok *</label>
                 <input v-model.number="form.stock" type="number" required min="0" class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Link Pembelian</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">WhatsApp</label>
+                <input v-model="form.whatsapp_link" type="url" placeholder="https://wa.me/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Shopee</label>
+                <input v-model="form.shopee_link" type="url" placeholder="https://shopee.co.id/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">TikTok</label>
+                <input v-model="form.tiktok_link" type="url" placeholder="https://tiktok.com/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
               </div>
             </div>
           </div>
 
           <!-- Gallery -->
           <div class="space-y-3">
-            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Gallery</h4>
+            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Galeri</h4>
             <div class="grid grid-cols-5 md:grid-cols-6 gap-2">
               <div v-for="(img, idx) in form.gallery" :key="idx" class="aspect-square bg-primary-50 border-2 border-primary-100 rounded-xl overflow-hidden relative group">
                 <div class="w-full h-full bg-cover bg-center" :style="{ backgroundImage: 'url(' + getThumbnailUrl(img) + ')' }"></div>
@@ -312,27 +331,27 @@
                 <label class="block text-xs font-bold text-gray-700 mb-1.5">Status</label>
                 <select v-model="form.status" class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm bg-white rounded-xl">
                   <option value="draft">Draft</option>
-                  <option value="published">Published</option>
+                  <option value="published">Diterbitkan</option>
                   <option value="best_seller">Best Seller</option>
-                  <option value="coming_soon">Coming Soon</option>
-                  <option value="out_of_stock">Out of Stock</option>
+                  <option value="coming_soon">Segera Hadir</option>
+                  <option value="out_of_stock">Habis</option>
                 </select>
               </div>
               <div class="flex items-end">
                 <label class="flex items-center gap-2 cursor-pointer">
                   <input v-model="form.is_featured" type="checkbox" class="w-4 h-4 rounded text-primary-600 focus:ring-primary-600 border-gray-300" />
-                  <span class="text-xs font-bold text-gray-700">Featured</span>
+                  <span class="text-xs font-bold text-gray-700">Unggulan</span>
                 </label>
               </div>
             </div>
           </div>
 
           <div class="flex gap-3 pt-4 border-t border-primary-100">
-            <button type="button" @click="showModal = false" class="flex-1 px-5 py-2.5 border-2 border-primary-200 text-accent-dark font-medium hover:bg-primary-50 transition-all text-sm rounded-xl" :disabled="loading">Cancel</button>
+            <button type="button" @click="showModal = false" class="flex-1 px-5 py-2.5 border-2 border-primary-200 text-accent-dark font-medium hover:bg-primary-50 transition-all text-sm rounded-xl" :disabled="loading">Batal</button>
             <button type="submit" class="flex-1 px-5 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-medium hover:from-primary-700 hover:to-primary-800 transition-all text-sm rounded-xl shadow-red flex items-center justify-center gap-2" :disabled="loading">
               <span v-if="loading" class="material-icons-round animate-spin">refresh</span>
               <span v-else class="material-icons-round">{{ editingId ? 'save' : 'add' }}</span>
-              {{ loading ? 'Saving...' : (editingId ? 'Update' : 'Add') }}
+              {{ loading ? 'Menyimpan...' : (editingId ? 'Perbarui' : 'Tambah') }}
             </button>
           </div>
         </form>
@@ -373,7 +392,10 @@ const form = ref({
   status: 'draft',
   is_featured: false,
   variants: [],
-  specifications: []
+  specifications: [],
+  whatsapp_link: '',
+  shopee_link: '',
+  tiktok_link: ''
 })
 
 const variantTypes = ref([
@@ -613,7 +635,10 @@ async function saveProduct() {
       gallery: form.value.gallery,
       status: form.value.status,
       is_featured: form.value.is_featured,
-      specifications: validSpecifications.length > 0 ? validSpecifications : []
+      specifications: validSpecifications.length > 0 ? validSpecifications : [],
+      whatsapp_link: form.value.whatsapp_link,
+      shopee_link: form.value.shopee_link,
+      tiktok_link: form.value.tiktok_link
     }
     
     // Only add variants if there are any
@@ -638,7 +663,7 @@ async function saveProduct() {
       }
       
       if (updateError) throw updateError
-      success.value = 'Produk berhasil diupdate!'
+      success.value = 'Produk berhasil diperbarui!'
     } else {
       let { error: insertError } = await supabase
         .from('products')
@@ -674,7 +699,7 @@ async function saveProduct() {
 }
 
 async function deleteProduct(id) {
-  if (confirm('Delete this product?')) {
+  if (confirm('Hapus produk ini?')) {
     await supabase.from('products').delete().eq('id', id)
     await loadProducts()
   }
@@ -697,7 +722,10 @@ function editProduct(product) {
     status: product.status,
     is_featured: product.is_featured,
     variants: product.variants || [],
-    specifications: product.specifications || []
+    specifications: product.specifications || [],
+    whatsapp_link: product.whatsapp_link || '',
+    shopee_link: product.shopee_link || '',
+    tiktok_link: product.tiktok_link || ''
   }
   showModal.value = true
 }
@@ -719,12 +747,15 @@ function resetForm() {
     status: 'draft',
     is_featured: false,
     variants: [],
-    specifications: []
+    specifications: [],
+    whatsapp_link: '',
+    shopee_link: '',
+    tiktok_link: ''
   }
   editingId.value = null
 }
 
-// Reset form dan error saat membuka modal tambah produk
+// Reset form and error when opening add product modal
 function openAddModal() {
   resetForm()
   showModal.value = true
