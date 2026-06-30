@@ -131,7 +131,7 @@ const menuItems = [
   { path: '/admin', label: 'Overview', icon: 'space_dashboard' },
   { path: '/admin/products', label: 'Products', icon: 'inventory_2' },
   { path: '/admin/analytics', label: 'Analytics', icon: 'analytics' },
-  { path: '/admin/audit-logs', label: 'Audit Logs', icon: 'history' }
+  { path: '/admin/audit-logs', label: 'Audit Logs & Registration Logs', icon: 'history' }
 ]
 
 const currentPageTitle = computed(() => {
