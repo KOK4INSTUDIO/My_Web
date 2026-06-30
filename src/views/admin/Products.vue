@@ -618,7 +618,7 @@ async function saveProduct() {
     // Filter specifications to only include those with both key and value
     const validSpecifications = form.value.specifications.filter(spec => spec.key && spec.value)
     
-    // Try to save with all fields first
+    // Basic product data (fields that should always exist)
     const productData = {
       name: form.value.name,
       slug: form.value.slug,
@@ -631,10 +631,15 @@ async function saveProduct() {
       gallery: form.value.gallery,
       status: form.value.status,
       is_featured: form.value.is_featured,
-      specifications: validSpecifications.length > 0 ? validSpecifications : [],
-      whatsapp_link: form.value.whatsapp_link,
-      shopee_link: form.value.shopee_link,
-      tiktok_link: form.value.tiktok_link
+      specifications: validSpecifications.length > 0 ? validSpecifications : []
+    }
+    
+    // Optional fields (add only if available)
+    if (form.value.shopee_link) {
+      productData.shopee_link = form.value.shopee_link
+    }
+    if (form.value.tiktok_link) {
+      productData.tiktok_link = form.value.tiktok_link
     }
     
     // Only add variants if there are any
@@ -648,10 +653,12 @@ async function saveProduct() {
         .update(productData)
         .eq('id', editingId.value)
       
-      // If error is about missing variants column, try without it
+      // If error is about missing columns, try without them
       if (updateError && (updateError.message?.includes('variants') || updateError.code === 'PGRST116')) {
         const basicData = { ...productData }
         delete basicData.variants
+        delete basicData.shopee_link
+        delete basicData.tiktok_link
         ;({ error: updateError } = await supabase
           .from('products')
           .update(basicData)
@@ -665,10 +672,12 @@ async function saveProduct() {
         .from('products')
         .insert(productData)
       
-      // If error is about missing variants column, try without it
-      if (insertError && (insertError.message?.includes('variants') || insertError.code === 'PGRST116')) {
+      // If error is about missing columns, try without them
+      if (insertError && (insertError.message?.includes('variants') || insertError.message?.includes('shopee_link') || insertError.message?.includes('tiktok_link') || insertError.code === 'PGRST116')) {
         const basicData = { ...productData }
         delete basicData.variants
+        delete basicData.shopee_link
+        delete basicData.tiktok_link
         ;({ error: insertError } = await supabase
           .from('products')
           .insert(basicData))
@@ -719,9 +728,9 @@ function editProduct(product) {
     is_featured: product.is_featured,
     variants: product.variants || [],
     specifications: product.specifications || [],
-    whatsapp_link: product.whatsapp_link || '',
-    shopee_link: product.shopee_link || '',
-    tiktok_link: product.tiktok_link || ''
+    whatsapp_link: product?.whatsapp_link || '',
+    shopee_link: product?.shopee_link || '',
+    tiktok_link: product?.tiktok_link || ''
   }
   showModal.value = true
 }

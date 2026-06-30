@@ -130,9 +130,25 @@
           <h3 class="font-display text-2xl font-bold text-accent-dark mb-6">Pilih Cara Pembelian</h3>
           
           <div class="space-y-4">
+            <!-- WhatsApp -->
+            <a
+              :href="whatsAppLink"
+              target="_blank"
+              class="flex items-center gap-4 p-4 border-2 border-primary-600 rounded-xl hover:bg-primary-50 transition-all"
+            >
+              <div class="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
+                <img src="/asset/whatsapp.png" alt="WhatsApp" class="w-full h-full object-contain" />
+              </div>
+              <div class="flex-1">
+                <h4 class="font-semibold text-accent-dark">WhatsApp</h4>
+                <p class="text-sm text-accent-gray">+62 895-0179-8516</p>
+              </div>
+              <span class="material-icons-round text-primary-600">arrow_forward</span>
+            </a>
+
             <!-- TikTok Shop -->
             <a
-              :href="product.tiktok_link || 'https://vt.tiktok.com/ZSQc1mvbx/?page=Mall'"
+              :href="product?.tiktok_link || 'https://vt.tiktok.com/ZSQc1mvbx/?page=Mall'"
               target="_blank"
               class="flex items-center gap-4 p-4 border-2 border-primary-600 rounded-xl hover:bg-primary-50 transition-all"
             >
@@ -148,7 +164,7 @@
 
             <!-- Shopee -->
             <a
-              :href="product.shopee_link || 'https://shopee.co.id/'"
+              :href="product?.shopee_link || 'https://shopee.co.id/'"
               target="_blank"
               class="flex items-center gap-4 p-4 border-2 border-primary-600 rounded-xl hover:bg-primary-50 transition-all"
             >
