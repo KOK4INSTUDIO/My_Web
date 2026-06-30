@@ -47,30 +47,24 @@
         <span class="material-icons-round text-primary-600 text-2xl">lightbulb</span>
         Quick Actions
       </h3>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <router-link to="/admin/products" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-primary-100">
           <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-md">
             <span class="material-icons-round text-white text-2xl">add_circle</span>
           </div>
           <span class="text-sm font-bold text-gray-700">Add Product</span>
         </router-link>
-        <router-link to="/admin/pre-orders" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-teal-100">
-          <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center shadow-md">
-            <span class="material-icons-round text-white text-2xl">shopping_cart</span>
-          </div>
-          <span class="text-sm font-bold text-gray-700">Orders</span>
-        </router-link>
-        <router-link to="/admin/inventory" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-blue-100">
+        <router-link to="/admin/analytics" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-blue-100">
           <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-md">
-            <span class="material-icons-round text-white text-2xl">inventory</span>
+            <span class="material-icons-round text-white text-2xl">analytics</span>
           </div>
-          <span class="text-sm font-bold text-gray-700">Inventory</span>
+          <span class="text-sm font-bold text-gray-700">Analytics</span>
         </router-link>
-        <router-link to="/admin/banners" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-purple-100">
+        <router-link to="/admin/audit-logs" class="flex flex-col items-center gap-3 p-5 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl hover:shadow-lg transition-all hover:-translate-y-1 border border-purple-100">
           <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
-            <span class="material-icons-round text-white text-2xl">image</span>
+            <span class="material-icons-round text-white text-2xl">history</span>
           </div>
-          <span class="text-sm font-bold text-gray-700">Banners</span>
+          <span class="text-sm font-bold text-gray-700">Audit Logs</span>
         </router-link>
       </div>
     </div>

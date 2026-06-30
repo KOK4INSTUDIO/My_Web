@@ -1,49 +1,33 @@
 <template>
   <div class="flex h-screen bg-gray-50">
-    <!-- Mobile Appbar -->
+    <!-- Mobile Top Appbar -->
     <header
       v-if="isMobile"
       class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg"
     >
       <div class="flex items-center justify-between px-4 py-3">
         <div class="flex items-center gap-3">
-          <button
-            @click="sidebarOpen = !sidebarOpen"
-            class="p-2 rounded-lg hover:bg-white/20 transition-colors"
-          >
-            <span class="material-icons-round text-2xl">menu</span>
-          </button>
           <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-8 w-auto">
         </div>
         <div class="flex items-center gap-2">
           <span class="text-sm font-medium">{{ currentPageTitle }}</span>
+          <button @click="handleLogout" class="p-2 rounded-lg hover:bg-white/20 transition-colors">
+            <span class="material-icons-round text-xl">logout</span>
+          </button>
         </div>
       </div>
     </header>
 
-    <!-- Sidebar Overlay (mobile) -->
-    <div
-      v-if="sidebarOpen && isMobile"
-      @click="sidebarOpen = false"
-      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-    ></div>
-
-    <!-- Sidebar -->
+    <!-- Sidebar (Desktop Only) -->
     <aside
+      v-if="!isMobile"
       ref="sidebar"
-      class="fixed md:relative z-50 w-72 bg-white border-r border-gray-100 flex flex-col h-full transition-all duration-300 shadow-xl"
-      :class="{ 'translate-x-0': sidebarOpen || !isMobile, '-translate-x-full': !sidebarOpen && isMobile }"
+      class="relative z-50 w-72 bg-white border-r border-gray-100 flex flex-col h-full transition-all duration-300 shadow-xl"
     >
       <!-- Logo Area -->
       <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-primary-100">
         <div class="flex items-center gap-3">
           <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-10 w-auto">
-          <div>
-            <p class="text-[10px] text-primary-600 font-semibold uppercase tracking-wider">Admin Panel</p>
-          </div>
-          <button v-if="isMobile" @click="sidebarOpen = false" class="ml-auto text-gray-500 hover:text-primary-600 p-1">
-            <span class="material-icons-round">close</span>
-          </button>
         </div>
       </div>
       
@@ -54,7 +38,6 @@
           v-for="item in menuItems"
           :key="item.path"
           :to="item.path"
-          @click="isMobile && (sidebarOpen = false)"
           class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 transition-all hover:bg-primary-50 hover:text-primary-700 mb-2 group"
           :class="{ 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md shadow-primary-200': isActive(item.path)}"
         >
@@ -82,7 +65,7 @@
     </aside>
     
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto" :class="{ 'pt-16': isMobile }">
+    <main class="flex-1 overflow-y-auto" :class="{ 'pt-16 pb-20': isMobile }">
       <!-- Desktop Header -->
       <header v-if="!isMobile" class="bg-white/90 backdrop-blur-xl border-b border-gray-100 px-8 py-5 flex items-center justify-between sticky top-0 z-30">
         <div class="flex items-center gap-3">
@@ -107,6 +90,25 @@
         <router-view />
       </div>
     </main>
+
+    <!-- Mobile Bottom Navbar -->
+    <nav
+      v-if="isMobile"
+      class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 shadow-lg"
+    >
+      <div class="flex items-center justify-around py-2">
+        <router-link
+          v-for="item in menuItems"
+          :key="item.path"
+          :to="item.path"
+          class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all"
+          :class="{ 'text-primary-600': isActive(item.path), 'text-gray-500': !isActive(item.path) }"
+        >
+          <span class="material-icons-round text-2xl">{{ item.icon }}</span>
+          <span class="text-xs font-medium">{{ item.label }}</span>
+        </router-link>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -128,13 +130,8 @@ let timeInterval = ref(null)
 const menuItems = [
   { path: '/admin', label: 'Overview', icon: 'space_dashboard' },
   { path: '/admin/products', label: 'Products', icon: 'inventory_2' },
-  { path: '/admin/inventory', label: 'Inventory', icon: 'inventory' },
   { path: '/admin/analytics', label: 'Analytics', icon: 'analytics' },
-  { path: '/admin/audit-logs', label: 'Audit Logs', icon: 'history' },
-  { path: '/admin/banners', label: 'Banners', icon: 'image' },
-  { path: '/admin/about', label: 'About', icon: 'info' },
-  { path: '/admin/social', label: 'Social', icon: 'share' },
-  { path: '/admin/settings', label: 'Settings', icon: 'settings' }
+  { path: '/admin/audit-logs', label: 'Audit Logs', icon: 'history' }
 ]
 
 const currentPageTitle = computed(() => {
