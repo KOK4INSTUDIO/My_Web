@@ -148,7 +148,7 @@
 
             <!-- TikTok Shop -->
             <a
-              :href="product?.tiktok_link || 'https://vt.tiktok.com/ZSQc1mvbx/?page=Mall'"
+              href="https://vt.tiktok.com/ZSQc1mvbx/?page=Mall"
               target="_blank"
               class="flex items-center gap-4 p-4 border-2 border-primary-600 rounded-xl hover:bg-primary-50 transition-all"
             >
@@ -164,7 +164,7 @@
 
             <!-- Shopee -->
             <a
-              :href="product?.shopee_link || 'https://shopee.co.id/'"
+              href="https://shopee.co.id/"
               target="_blank"
               class="flex items-center gap-4 p-4 border-2 border-primary-600 rounded-xl hover:bg-primary-50 transition-all"
             >

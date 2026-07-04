@@ -178,20 +178,7 @@
             </div>
           </div>
 
-          <!-- Links -->
-          <div class="space-y-3">
-            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Link Pembelian</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">Shopee</label>
-                <input v-model="form.shopee_link" type="url" placeholder="https://shopee.co.id/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">TikTok</label>
-                <input v-model="form.tiktok_link" type="url" placeholder="https://tiktok.com/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
-              </div>
-            </div>
-          </div>
+
 
           <!-- Gallery -->
           <div class="space-y-3">
@@ -634,13 +621,7 @@ async function saveProduct() {
       specifications: validSpecifications.length > 0 ? validSpecifications : []
     }
     
-    // Optional fields (add only if available)
-    if (form.value.shopee_link) {
-      productData.shopee_link = form.value.shopee_link
-    }
-    if (form.value.tiktok_link) {
-      productData.tiktok_link = form.value.tiktok_link
-    }
+
     
     // Only add variants if there are any
     if (form.value.variants && form.value.variants.length > 0) {
@@ -653,12 +634,10 @@ async function saveProduct() {
         .update(productData)
         .eq('id', editingId.value)
       
-      // If error is about missing columns, try without them
+      // If error is about missing variants column, try without it
       if (updateError && (updateError.message?.includes('variants') || updateError.code === 'PGRST116')) {
         const basicData = { ...productData }
         delete basicData.variants
-        delete basicData.shopee_link
-        delete basicData.tiktok_link
         ;({ error: updateError } = await supabase
           .from('products')
           .update(basicData)
@@ -672,12 +651,10 @@ async function saveProduct() {
         .from('products')
         .insert(productData)
       
-      // If error is about missing columns, try without them
-      if (insertError && (insertError.message?.includes('variants') || insertError.message?.includes('shopee_link') || insertError.message?.includes('tiktok_link') || insertError.code === 'PGRST116')) {
+      // If error is about missing variants column, try without it
+      if (insertError && (insertError.message?.includes('variants') || insertError.code === 'PGRST116')) {
         const basicData = { ...productData }
         delete basicData.variants
-        delete basicData.shopee_link
-        delete basicData.tiktok_link
         ;({ error: insertError } = await supabase
           .from('products')
           .insert(basicData))
@@ -727,10 +704,7 @@ function editProduct(product) {
     status: product.status,
     is_featured: product.is_featured,
     variants: product.variants || [],
-    specifications: product.specifications || [],
-    whatsapp_link: product?.whatsapp_link || '',
-    shopee_link: product?.shopee_link || '',
-    tiktok_link: product?.tiktok_link || ''
+    specifications: product.specifications || []
   }
   showModal.value = true
 }
@@ -752,10 +726,7 @@ function resetForm() {
     status: 'draft',
     is_featured: false,
     variants: [],
-    specifications: [],
-    whatsapp_link: '',
-    shopee_link: '',
-    tiktok_link: ''
+    specifications: []
   }
   editingId.value = null
 }
