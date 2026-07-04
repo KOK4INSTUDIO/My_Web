@@ -180,6 +180,21 @@
 
 
 
+          <!-- Links -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Link Pembelian</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Shopee</label>
+                <input v-model="form.shopee_link" type="url" placeholder="https://shopee.co.id/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">TikTok</label>
+                <input v-model="form.tiktok_link" type="url" placeholder="https://tiktok.com/..." class="w-full px-4 py-2.5 border-2 border-gray-200 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all text-sm rounded-xl" />
+              </div>
+            </div>
+          </div>
+
           <!-- Gallery -->
           <div class="space-y-3">
             <h4 class="font-bold text-accent-dark border-l-2 border-primary-600 pl-3 text-sm">Galeri</h4>
@@ -704,7 +719,9 @@ function editProduct(product) {
     status: product.status,
     is_featured: product.is_featured,
     variants: product.variants || [],
-    specifications: product.specifications || []
+    specifications: product.specifications || [],
+    shopee_link: '',
+    tiktok_link: ''
   }
   showModal.value = true
 }
@@ -726,7 +743,9 @@ function resetForm() {
     status: 'draft',
     is_featured: false,
     variants: [],
-    specifications: []
+    specifications: [],
+    shopee_link: '',
+    tiktok_link: ''
   }
   editingId.value = null
 }
