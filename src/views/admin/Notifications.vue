@@ -29,7 +29,7 @@
         <span class="text-sm text-gray-500">{{ allNotifications.length }} notifikasi</span>
       </div>
       <div class="divide-y divide-gray-100 max-h-[70vh] overflow-y-auto">
-        <div v-for="notification in allNotifications" :key="notification.id" class="p-5 hover:bg-gray-50 transition-colors" :class="{'bg-purple-50': !notification.read}">
+        <div v-for="notification in allNotifications" :key="notification.id" @click="openDetail(notification)" class="p-5 hover:bg-gray-50 transition-colors cursor-pointer" :class="{'bg-purple-50': !notification.read}">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-md" :class="notification.bgClass">
               <span class="material-icons-round text-2xl" :class="notification.iconClass">{{ notification.icon }}</span>
@@ -55,6 +55,60 @@
         </div>
       </div>
     </div>
+
+    <!-- Detail Modal -->
+    <div v-if="showDetailModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-hidden">
+        <div class="bg-gradient-to-r from-purple-600 via-purple-500 to-purple-700 px-6 py-6 flex items-center justify-between">
+          <h3 class="font-display text-xl font-bold text-white">Detail Notifikasi</h3>
+          <button @click="closeDetailModal" class="p-2 hover:bg-white/20 rounded-xl transition-colors">
+            <span class="material-icons-round text-white text-2xl">close</span>
+          </button>
+        </div>
+        <div v-if="selectedNotification" class="p-6">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-md" :class="selectedNotification.bgClass">
+              <span class="material-icons-round text-3xl" :class="selectedNotification.iconClass">{{ selectedNotification.icon }}</span>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-bold text-gray-800 text-lg">{{ selectedNotification.title }}</h4>
+              <p class="text-gray-500 text-sm mt-1 flex items-center gap-1">
+                <span class="material-icons-round text-sm">schedule</span>
+                {{ selectedNotification.time }}
+              </p>
+            </div>
+          </div>
+          <div class="bg-gray-50 rounded-2xl p-4 mb-6">
+            <h5 class="font-semibold text-gray-800 text-sm mb-2 flex items-center gap-2">
+              <span class="material-icons-round text-purple-600 text-lg">description</span>
+              Deskripsi
+            </h5>
+            <p class="text-gray-600 text-sm">{{ selectedNotification.description }}</p>
+          </div>
+          <div v-if="selectedNotification.contact" class="bg-emerald-50 rounded-2xl p-4 mb-6">
+            <h5 class="font-semibold text-emerald-800 text-sm mb-2 flex items-center gap-2">
+              <span class="material-icons-round text-emerald-600 text-lg">contact_mail</span>
+              Detail Pengirim
+            </h5>
+            <div class="space-y-2">
+              <p class="text-emerald-700 text-sm"><span class="font-medium">Nama:</span> {{ selectedNotification.contact.name }}</p>
+              <p class="text-emerald-700 text-sm"><span class="font-medium">Email:</span> {{ selectedNotification.contact.email }}</p>
+              <p class="text-emerald-700 text-sm"><span class="font-medium">Subjek:</span> {{ selectedNotification.contact.subject }}</p>
+              <p class="text-emerald-700 text-sm"><span class="font-medium">Pesan Lengkap:</span> {{ selectedNotification.contact.message }}</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <button v-if="!selectedNotification.read" @click="markAsRead" class="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:from-purple-600 hover:to-purple-700 px-5 py-3 rounded-xl flex items-center justify-center gap-2 transition-all font-semibold shadow-lg hover:shadow-xl">
+              <span class="material-icons-round text-xl">done</span>
+              Tandai Dibaca
+            </button>
+            <button @click="closeDetailModal" class="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 px-5 py-3 rounded-xl flex items-center justify-center gap-2 transition-all font-semibold">
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -63,6 +117,10 @@ import { ref, computed, onMounted } from 'vue'
 import { useContactStore } from '@/stores/contact'
 
 const contactStore = useContactStore()
+
+// Modal state
+const showDetailModal = ref(false)
+const selectedNotification = ref(null)
 
 // Recent activities data
 const recentActivities = ref([
@@ -108,7 +166,8 @@ const allNotifications = computed(() => {
     time: new Date(msg.createdAt).toLocaleString('id-ID'),
     bgClass: 'bg-emerald-100',
     iconClass: 'text-emerald-700',
-    read: false
+    read: false,
+    contact: msg
   }))
   
   return [...contactNotifications, ...recentActivities.value].sort((a, b) => {
@@ -121,6 +180,28 @@ const allNotifications = computed(() => {
 function markAllAsRead() {
   recentActivities.value = recentActivities.value.map(act => ({ ...act, read: true }))
   // For contact messages, we don't track read status, so just leave as is
+}
+
+function openDetail(notification) {
+  selectedNotification.value = notification
+  showDetailModal.value = true
+}
+
+function closeDetailModal() {
+  showDetailModal.value = false
+  selectedNotification.value = null
+}
+
+function markAsRead() {
+  if (selectedNotification.value) {
+    // Mark as read in recent activities if it's an activity
+    const activityIndex = recentActivities.value.findIndex(act => act.id === selectedNotification.value.id)
+    if (activityIndex !== -1) {
+      recentActivities.value[activityIndex].read = true
+    }
+    selectedNotification.value.read = true
+    closeDetailModal()
+  }
 }
 
 onMounted(() => {
