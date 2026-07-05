@@ -141,6 +141,7 @@ const menuItems = [
   { path: '/admin', label: 'Overview', icon: 'space_dashboard' },
   { path: '/admin/products', label: 'Produk', icon: 'inventory_2' },
   { path: '/admin/analytics', label: 'Analitik', icon: 'analytics' },
+  { path: '/admin/notifications', label: 'Notifikasi', icon: 'notifications' },
   { path: '/admin/audit-logs', label: 'Registration Log', icon: 'history' }
 ]
 

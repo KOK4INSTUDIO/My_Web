@@ -167,9 +167,9 @@
               Recent Activity
             </h3>
           </div>
-          <button class="text-primary-600 hover:text-primary-700 text-sm font-semibold">
+          <router-link to="/admin/notifications" class="text-primary-600 hover:text-primary-700 text-sm font-semibold">
             View All
-          </button>
+          </router-link>
         </div>
         <div class="divide-y divide-gray-100 max-h-[420px] overflow-y-auto">
           <div
