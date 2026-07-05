@@ -22,10 +22,11 @@
     <aside
       v-if="!isMobile"
       ref="sidebar"
-      class="relative z-50 w-72 bg-white border-r border-gray-100 flex flex-col h-full transition-all duration-300 shadow-xl"
+      class="relative z-50 bg-white border-r border-gray-100 flex flex-col h-full transition-all duration-300 shadow-xl"
+      :class="sidebarOpen ? 'w-72' : 'w-20'"
     >
       <!-- Logo Area -->
-      <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-primary-100">
+      <div class="p-6 border-b border-gray-100 bg-white">
         <div class="flex items-center gap-3">
           <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-10 w-auto">
         </div>
@@ -33,7 +34,7 @@
       
       <!-- Navigation -->
       <nav class="flex-1 py-6 overflow-y-auto px-4">
-        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider px-2 mb-4">Main Menu</p>
+        <p v-if="sidebarOpen" class="text-xs font-bold text-gray-400 uppercase tracking-wider px-2 mb-4">Main Menu</p>
         <router-link
           v-for="item in menuItems"
           :key="item.path"
@@ -42,8 +43,8 @@
           :class="{ 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md shadow-primary-200': isActive(item.path)}"
         >
           <span class="material-icons-round text-xl">{{ item.icon }}</span>
-          <span class="flex-1 text-sm font-medium">{{ item.label }}</span>
-          <span v-if="isActive(item.path)" class="material-icons-round text-sm">chevron_right</span>
+          <span v-if="sidebarOpen" class="flex-1 text-sm font-medium">{{ item.label }}</span>
+          <span v-if="isActive(item.path) && sidebarOpen" class="material-icons-round text-sm">chevron_right</span>
         </router-link>
       </nav>
       
@@ -53,11 +54,11 @@
           <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-200">
             <span class="material-icons-round text-white text-xl">person</span>
           </div>
-          <div class="flex-1 min-w-0">
+          <div v-if="sidebarOpen" class="flex-1 min-w-0">
             <p class="text-sm font-bold text-gray-800 truncate">Admin</p>
             <p class="text-xs text-gray-500 truncate">admin@kok4instudio.com</p>
           </div>
-          <button @click="handleLogout" class="text-gray-500 hover:text-red-600 p-2 hover:bg-red-50 rounded-xl transition-all">
+          <button v-if="sidebarOpen" @click="handleLogout" class="text-gray-500 hover:text-red-600 p-2 hover:bg-red-50 rounded-xl transition-all">
             <span class="material-icons-round text-xl">logout</span>
           </button>
         </div>
@@ -69,6 +70,9 @@
       <!-- Desktop Header -->
       <header v-if="!isMobile" class="bg-white/90 backdrop-blur-xl border-b border-gray-100 px-8 py-5 flex items-center justify-between sticky top-0 z-30">
         <div class="flex items-center gap-3">
+          <button @click="sidebarOpen = !sidebarOpen" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+            <span class="material-icons-round text-gray-600 text-2xl">{{ sidebarOpen ? 'menu_open' : 'menu' }}</span>
+          </button>
           <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
             <span class="material-icons-round text-white text-xl">{{ currentPageIcon }}</span>
           </div>
