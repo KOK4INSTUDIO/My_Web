@@ -9,7 +9,7 @@
               <span class="material-icons-round text-white text-sm">waving_hand</span>
               <span class="text-white/90 text-sm font-medium">Hello, Admin!</span>
             </div>
-            <h2 class="font-display text-2xl md:text-4xl font-bold text-white">Welcome back! 👋</h2>
+            <h2 class="font-display text-2xl md:text-4xl font-bold text-white">Welcome back!</h2>
             <p class="text-white/80 text-sm md:text-base mt-2">Here's your fashion store dashboard today.</p>
           </div>
           <button class="bg-white text-primary-600 hover:bg-primary-50 px-5 py-3 rounded-2xl flex items-center gap-2 transition-all font-semibold shadow-lg hover:shadow-xl">
@@ -66,6 +66,40 @@
           </div>
           <span class="text-sm font-bold text-gray-700">Audit Logs</span>
         </router-link>
+      </div>
+    </div>
+
+    <!-- Contact Messages -->
+    <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-0 rounded-3xl shadow-md p-6">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
+          <span class="material-icons-round text-white text-3xl">mail</span>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-bold text-gray-800 text-lg">Pesan Kontak Masuk!</h3>
+          <p class="text-sm text-emerald-700 mt-1">Anda memiliki {{ contactStore.messages.length }} pesan kontak baru</p>
+          <div v-if="contactStore.messages.length > 0" class="mt-4 space-y-3 max-h-60 overflow-y-auto">
+            <div v-for="msg in contactStore.messages" :key="msg.id" class="bg-white border border-emerald-200 rounded-xl p-4 shadow-sm">
+              <div class="flex items-start justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="material-icons-round text-emerald-500 text-sm">person</span>
+                  <p class="font-bold text-gray-800 text-sm">{{ msg.name }}</p>
+                </div>
+                <button @click="contactStore.deleteMessage(msg.id)" class="text-red-500 hover:text-red-700 p-1 transition-colors">
+                  <span class="material-icons-round text-sm">delete</span>
+                </button>
+              </div>
+              <p class="text-gray-600 text-xs mb-1"><span class="font-medium">Email:</span> {{ msg.email }}</p>
+              <p class="text-gray-600 text-xs mb-1"><span class="font-medium">Subjek:</span> {{ msg.subject }}</p>
+              <p class="text-gray-700 text-sm mt-2">{{ msg.message }}</p>
+              <p class="text-gray-400 text-xs mt-2 flex items-center gap-1">
+                <span class="material-icons-round text-sm">schedule</span>
+                {{ new Date(msg.createdAt).toLocaleString('id-ID') }}
+              </p>
+            </div>
+          </div>
+          <p v-else class="text-sm text-gray-500 mt-4">Belum ada pesan masuk</p>
+        </div>
       </div>
     </div>
 
@@ -208,6 +242,9 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { supabase } from '@/lib/supabase'
+import { useContactStore } from '@/stores/contact'
+
+const contactStore = useContactStore()
 
 const stats = ref({
   products: 0,

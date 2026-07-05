@@ -126,6 +126,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useContactStore } from '@/stores/contact'
+
+const contactStore = useContactStore()
 
 const form = ref({
   name: '',
@@ -137,6 +140,15 @@ const form = ref({
 function submitForm() {
   const subject = encodeURIComponent(form.value.subject)
   const body = encodeURIComponent(`Nama: ${form.value.name}\nEmail: ${form.value.email}\n\nPesan:\n${form.value.message}`)
+  
+  // Save to store
+  contactStore.addMessage({
+    name: form.value.name,
+    email: form.value.email,
+    subject: form.value.subject,
+    message: form.value.message
+  })
+  
   window.location.href = `mailto:kok4instudio@gmail.com?subject=${subject}&body=${body}`
   alert(`Terima kasih ${form.value.name}! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.`)
   form.value = { name: '', email: '', subject: 'Pertanyaan Produk', message: '' }

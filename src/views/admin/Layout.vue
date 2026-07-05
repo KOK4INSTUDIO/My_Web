@@ -26,9 +26,15 @@
       :class="sidebarOpen ? 'w-72' : 'w-20'"
     >
       <!-- Logo Area -->
-      <div class="p-6 border-b border-gray-100 bg-white">
+      <div class="p-6 border-b border-gray-100 bg-white" v-if="sidebarOpen">
         <div class="flex items-center gap-3">
           <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-10 w-auto">
+        </div>
+      </div>
+      <!-- Mini Logo Area (when closed) -->
+      <div class="p-6 border-b border-gray-100 bg-white flex justify-center" v-else>
+        <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
+          <span class="material-icons-round text-white text-lg">palette</span>
         </div>
       </div>
       
