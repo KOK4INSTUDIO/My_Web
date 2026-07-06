@@ -89,10 +89,10 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
     </section>
 
     <!-- Featured Products Section (Carousel) -->
-    <section class="py-16 md:py-20 bg-primary-50">
+    <section class="py-12 md:py-20 bg-primary-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10">
-          <h2 class="font-display text-2xl md:text-3xl font-bold text-accent-dark">Produk Kami</h2>
+        <div class="text-center mb-8 md:mb-10">
+          <h2 class="font-display text-xl md:text-3xl font-bold text-accent-dark">Produk Kami</h2>
         </div>
         
         <div v-if="products.length > 0" class="relative">
@@ -102,32 +102,32 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
               class="flex transition-transform duration-500 ease-out"
               :style="{ transform: `translateX(-${currentProductSlide * 100}%)` }"
             >
-              <!-- Each slide shows 4 products on lg, 2 on sm, 1 on xs -->
+              <!-- Mobile: 2 products per slide, Tablet: 3, Desktop: 4 -->
               <div v-for="slideIndex in totalProductSlides" :key="slideIndex" class="min-w-full">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-8">
                   <router-link
                     v-for="product in getProductsForSlide(slideIndex - 1)"
                     :key="product.id"
                     to="/user/login"
                     class="group"
                   >
-                    <div class="aspect-square bg-white border border-primary-100 rounded-xl mb-4 overflow-hidden shadow-soft group-hover:shadow-red transition-all">
+                    <div class="aspect-square bg-white border border-primary-100 rounded-lg md:rounded-xl mb-2 md:mb-3 overflow-hidden shadow-soft group-hover:shadow-red transition-all">
                       <div
                         v-if="product.gallery?.[0]"
                         class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
                         :style="{ backgroundImage: `url(${product.gallery[0]})` }"
                       ></div>
                       <span v-else class="w-full h-full flex items-center justify-center">
-                        <span class="material-icons-round text-6xl text-gray-300">image</span>
+                        <span class="material-icons-round text-2xl md:text-4xl text-gray-300">image</span>
                       </span>
                     </div>
-                    <p class="text-accent-gray text-xs mb-1">{{ product.category?.name || 'Aksesori' }}</p>
-                    <h3 class="font-medium text-accent-dark mb-1">{{ product.name }}</h3>
-                    <div class="flex items-center gap-2">
-                      <p class="text-primary-600 font-bold">
+                    <p class="text-accent-gray text-xs mb-0.5">{{ product.category?.name || 'Aksesori' }}</p>
+                    <h3 class="font-medium text-accent-dark mb-0.5 text-xs md:text-sm">{{ product.name }}</h3>
+                    <div class="flex items-center gap-1">
+                      <p class="text-primary-600 font-bold text-xs md:text-sm">
                         Rp {{ (product.promo_price || product.price)?.toLocaleString() }}
                       </p>
-                      <p v-if="product.promo_price" class="text-accent-gray text-sm line-through">
+                      <p v-if="product.promo_price" class="text-accent-gray text-[10px] line-through">
                         Rp {{ product.price?.toLocaleString() }}
                       </p>
                     </div>
@@ -137,37 +137,37 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
             </div>
           </div>
           
-          <!-- Navigation Buttons -->
+          <!-- Navigation Buttons (only for tablet/desktop) -->
           <button 
             v-if="totalProductSlides > 1"
             @click="prevProductSlide"
-            class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
+            class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 md:w-12 md:h-12 bg-white border border-primary-100 rounded-full shadow-soft items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
           >
-            <span class="material-icons-round">arrow_back</span>
+            <span class="material-icons-round text-lg md:text-xl">arrow_back</span>
           </button>
           <button 
             v-if="totalProductSlides > 1"
             @click="nextProductSlide"
-            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white border border-primary-100 rounded-full shadow-soft flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
+            class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 md:w-12 md:h-12 bg-white border border-primary-100 rounded-full shadow-soft items-center justify-center text-primary-600 hover:bg-primary-50 transition-all"
           >
-            <span class="material-icons-round">arrow_forward</span>
+            <span class="material-icons-round text-lg md:text-xl">arrow_forward</span>
           </button>
           
           <!-- Dots Navigation -->
-          <div v-if="totalProductSlides > 1" class="flex justify-center gap-2 mt-8">
+          <div v-if="totalProductSlides > 1" class="flex justify-center gap-1.5 mt-6">
             <button
               v-for="i in totalProductSlides"
               :key="i"
               @click="currentProductSlide = i - 1"
-              class="w-3 h-3 rounded-full transition-all"
+              class="w-2 h-2 rounded-full transition-all"
               :class="currentProductSlide === i - 1 ? 'bg-primary-600' : 'bg-primary-200'"
             ></button>
           </div>
         </div>
         
-        <div v-else class="text-center py-10">
-          <span class="material-icons-round text-6xl text-primary-300 mb-4">shopping_bag</span>
-          <p class="text-accent-gray">Produk akan segera tersedia!</p>
+        <div v-else class="text-center py-8">
+          <span class="material-icons-round text-4xl md:text-6xl text-primary-300 mb-3">shopping_bag</span>
+          <p class="text-accent-gray text-sm">Produk akan segera tersedia!</p>
         </div>
       </div>
     </section>
