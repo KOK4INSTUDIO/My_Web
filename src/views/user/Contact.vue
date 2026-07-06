@@ -110,12 +110,20 @@
                 class="w-full px-4 py-3 border border-gray-300 bg-white focus:outline-none focus:border-accent-black transition-colors rounded-lg resize-none"
               ></textarea>
             </div>
+            <!-- Success Message -->
+            <div v-if="showSuccess" class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center gap-2">
+              <span class="material-icons-round">check_circle</span>
+              <span>Terima kasih! Pesan Anda telah terkirim.</span>
+            </div>
+            
             <button
               type="submit"
-              class="w-full flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-medium hover:bg-primary-800 transition-colors rounded-lg"
+              :disabled="isSending"
+              class="w-full flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-medium hover:bg-primary-800 transition-colors rounded-lg disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              <span class="material-icons-round">send</span>
-              Kirim Pesan
+              <span v-if="isSending" class="material-icons-round animate-spin">refresh</span>
+              <span v-else class="material-icons-round">send</span>
+              {{ isSending ? 'Mengirim...' : 'Kirim Pesan' }}
             </button>
           </form>
         </div>
@@ -127,8 +135,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useContactStore } from '@/stores/contact'
+import emailjs from '@emailjs/browser'
 
 const contactStore = useContactStore()
+const isSending = ref(false)
+const showSuccess = ref(false)
 
 const form = ref({
   name: '',
@@ -137,9 +148,8 @@ const form = ref({
   message: ''
 })
 
-function submitForm() {
-  const subject = encodeURIComponent(form.value.subject)
-  const body = encodeURIComponent(`Nama: ${form.value.name}\nEmail: ${form.value.email}\n\nPesan:\n${form.value.message}`)
+async function submitForm() {
+  isSending.value = true
   
   // Save to store
   contactStore.addMessage({
@@ -148,9 +158,37 @@ function submitForm() {
     subject: form.value.subject,
     message: form.value.message
   })
-  
-  window.location.href = `mailto:kok4instudio@gmail.com?subject=${subject}&body=${body}`
-  alert(`Terima kasih ${form.value.name}! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.`)
-  form.value = { name: '', email: '', subject: 'Pertanyaan Produk', message: '' }
+
+  try {
+    // EmailJS configuration - Anda perlu mendaftar di https://www.emailjs.com/ untuk mendapatkan credentials ini
+    const serviceID = 'YOUR_SERVICE_ID' // Ganti dengan Service ID Anda
+    const templateID = 'YOUR_TEMPLATE_ID' // Ganti dengan Template ID Anda
+    const publicKey = 'YOUR_PUBLIC_KEY' // Ganti dengan Public Key Anda
+
+    // Template parameters
+    const templateParams = {
+      from_name: form.value.name,
+      from_email: form.value.email,
+      subject: form.value.subject,
+      message: form.value.message
+    }
+
+    if (serviceID !== 'YOUR_SERVICE_ID' && templateID !== 'YOUR_TEMPLATE_ID' && publicKey !== 'YOUR_PUBLIC_KEY') {
+      await emailjs.send(serviceID, templateID, templateParams, publicKey)
+      showSuccess.value = true
+      form.value = { name: '', email: '', subject: 'Pertanyaan Produk', message: '' }
+      setTimeout(() => { showSuccess.value = false }, 5000)
+    } else {
+      // Fallback ke mailto jika EmailJS belum dikonfigurasi
+      const subject = encodeURIComponent(form.value.subject)
+      const body = encodeURIComponent(`Nama: ${form.value.name}\nEmail: ${form.value.email}\n\nPesan:\n${form.value.message}`)
+      window.location.href = `mailto:kok4instudio@gmail.com?subject=${subject}&body=${body}`
+    }
+  } catch (error) {
+    console.error('Error sending email:', error)
+    alert('Gagal mengirim pesan. Silakan coba lagi.')
+  } finally {
+    isSending.value = false
+  }
 }
 </script>
