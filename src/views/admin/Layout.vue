@@ -7,7 +7,7 @@
     >
       <div class="flex items-center justify-between px-4 py-3">
         <div class="flex items-center gap-3">
-          <img src="/asset/logo.png" alt="KOK41STUDIO" class="h-8 w-auto">
+          <img src="/asset/logo.png" alt="KOK41NSTUDIO™" class="h-8 w-auto">
         </div>
         <div class="flex items-center gap-2">
           <span class="text-sm font-medium">{{ currentPageTitle }}</span>

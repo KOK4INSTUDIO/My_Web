@@ -64,9 +64,9 @@
               <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">Pilih Produk</label>
                 <select class="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-accent-black transition-colors">
-                  <option>KOK41STUDIO™ Night Vision Yellow Lens UV400</option>
-                  <option>KOK41STUDIO™ Classic Black Sunglasses</option>
-                  <option>KOK41STUDIO™ Aviator Polarized</option>
+                  <option>KOK41NSTUDIO™ Night Vision Yellow Lens UV400</option>
+                  <option>KOK41NSTUDIO™ Classic Black Sunglasses</option>
+                  <option>KOK41NSTUDIO™ Aviator Polarized</option>
                 </select>
               </div>
 
@@ -103,14 +103,14 @@
             <div class="space-y-4">
               <div class="flex items-center justify-between p-4 border border-gray-100 rounded-lg">
                 <div>
-                  <p class="font-medium text-accent-black">KOK41STUDIO™ Night Vision</p>
+                  <p class="font-medium text-accent-black">KOK41NSTUDIO™ Night Vision</p>
                   <p class="text-sm text-gray-500">Tanggal: 15 Juni 2026</p>
                 </div>
                 <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Selesai</span>
               </div>
               <div class="flex items-center justify-between p-4 border border-gray-100 rounded-lg">
                 <div>
-                  <p class="font-medium text-accent-black">KOK41STUDIO™ Classic Black</p>
+                  <p class="font-medium text-accent-black">KOK41NSTUDIO™ Classic Black</p>
                   <p class="text-sm text-gray-500">Tanggal: 10 Juni 2026</p>
                 </div>
                 <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full">Diproses</span>

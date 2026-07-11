@@ -3,12 +3,12 @@
     <div class="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <!-- Info Side -->
           <h1 class="font-display text-4xl md:text-5xl font-bold text-accent-black mb-4">
-          KOK41STUDIO™
+          KOK41NSTUDIO™
         </h1>
       <div class="text-center lg:text-left">
         <img 
           src="https://i.imgur.com/l3v0q5b.png" 
-          alt="KOK41STUDIO Logo" 
+          alt="KOK41NSTUDIO™ Logo" 
           class="h-16 w-auto mx-auto lg:mx-0 mb-6"
         />
         <p class="text-gray-600 text-lg mb-8">
