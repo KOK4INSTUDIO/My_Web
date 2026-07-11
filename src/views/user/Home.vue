@@ -127,7 +127,7 @@ const banners = ref([])
 const categories = ref([])
 const currentSlide = ref(0)
 const carouselSlides = ref([
-  '/asset/video.mp4',
+  '/asset/video2mb.mp4',
 ])
 let carouselInterval = null
 
