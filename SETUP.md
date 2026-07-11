@@ -1,4 +1,4 @@
-# KOK4INSTUDIO™ Setup Guide
+# KOK41STUDIO™ Setup Guide
 
 ## 📁 Project Structure
 

@@ -49,14 +49,14 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <div class="flex items-center justify-center gap-3 mb-8">
-            <span class="font-display text-3xl font-bold text-accent-dark">KOK4INSTUDIO™</span>
+            <span class="font-display text-3xl font-bold text-accent-dark">KOK41STUDIO™</span>
           </div>
           <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
           <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
             Mari Berkolaborasi
           </h1>
           <p class="text-accent-gray text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Jangan hanya memakai produk yang sama dengan orang lain. Tambahkan sentuhan pribadi melalui layanan custom KOK4INSTUDIO™.
+            Jangan hanya memakai produk yang sama dengan orang lain. Tambahkan sentuhan pribadi melalui layanan custom KOK41STUDIO™.
 
 Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
           </p>
@@ -109,7 +109,7 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
         </div>
         <div class="mt-12 pt-8 border-t border-gray-200 text-center">
           <p class="text-gray-500 text-sm">
-            © 2026 KOK4INSTUDIO. All rights reserved.
+            © 2026 KOK41STUDIO. All rights reserved.
           </p>
         </div>
       </div>

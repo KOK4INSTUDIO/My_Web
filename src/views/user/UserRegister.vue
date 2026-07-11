@@ -17,7 +17,7 @@
           <!-- Header -->
           <div class="text-center mb-8">
             <div class="flex items-center justify-center mx-auto mb-4">
-              <img src="/asset/logo.png" alt="KOK4INSTUDIO" class="h-24 object-contain" />
+              <img src="/asset/logo.png" alt="KOK41STUDIO" class="h-24 object-contain" />
             </div>
             <h1 class="font-display text-3xl font-bold text-accent-dark">
               Daftar Akun Baru

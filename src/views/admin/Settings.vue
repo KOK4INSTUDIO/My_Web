@@ -68,7 +68,7 @@
         </div>
         <div>
           <label class="block text-xs font-bold text-black mb-1">Copyright</label>
-          <input v-model="settings.copyright" type="text" class="w-full px-3 py-2 rounded-lg border-2 border-black focus:outline-none focus:ring-2 focus:ring-red-500 text-sm" placeholder="© 2024 KOK4INSTUDIO">
+          <input v-model="settings.copyright" type="text" class="w-full px-3 py-2 rounded-lg border-2 border-black focus:outline-none focus:ring-2 focus:ring-red-500 text-sm" placeholder="© 2024 KOK41STUDIO">
         </div>
       </div>
     </div>
@@ -102,15 +102,15 @@
 import { ref } from 'vue'
 
 const settings = ref({
-  brand_name: 'KOK4INSTUDIO',
+  brand_name: 'KOK41STUDIO',
   tagline: 'Premium Fashion & Accessories',
   logo_url: '',
   favicon_url: '',
-  meta_title: 'KOK4INSTUDIO - Premium Fashion & Accessories',
-  meta_description: 'Discover premium fashion and accessories at KOK4INSTUDIO. High quality products with timeless design.',
+  meta_title: 'KOK41STUDIO - Premium Fashion & Accessories',
+  meta_description: 'Discover premium fashion and accessories at KOK41STUDIO. High quality products with timeless design.',
   meta_keywords: 'fashion, accessories, premium, clothing',
   footer_text: '',
-  copyright: '© 2024 KOK4INSTUDIO. All rights reserved.',
+  copyright: '© 2024 KOK41STUDIO. All rights reserved.',
   ga_id: '',
   fb_pixel: ''
 })

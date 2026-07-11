@@ -1,1 +1,0 @@
-import{C as o,g as r}from"./index-DM-eHqlF.js";const u=o("contact",()=>{const e=r([]);function a(t){e.value.unshift({id:Date.now(),...t,createdAt:new Date().toISOString()})}function n(t){e.value=e.value.filter(s=>s.id!==t)}return{messages:e,addMessage:a,deleteMessage:n}});export{u};
