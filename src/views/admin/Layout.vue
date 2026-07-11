@@ -28,7 +28,7 @@
       <!-- Logo Area -->
       <div class="p-6 border-b border-gray-100 bg-white" v-if="sidebarOpen">
         <div class="flex items-center gap-3">
-          <img src="/asset/logo.png" alt="KOK41STUDIO" class="h-10 w-auto">
+          <img src="/asset/logo.png" alt="KOK41NSTUDIO™" class="h-10 w-auto">
         </div>
       </div>
       <!-- Mini Logo Area (when closed) -->

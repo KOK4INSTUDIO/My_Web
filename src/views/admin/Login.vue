@@ -87,7 +87,7 @@
 
       <!-- Footer -->
       <p class="text-center text-gray-500 text-xs mt-6">
-        © 2026 KOK41STUDIO. All rights reserved.
+        © 2026 KOK41NSTUDIO™. All rights reserved.
       </p>
     </div>
   </div>

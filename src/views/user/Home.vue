@@ -109,7 +109,7 @@ Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
         </div>
         <div class="mt-12 pt-8 border-t border-gray-200 text-center">
           <p class="text-gray-500 text-sm">
-            © 2026 KOK41STUDIO. All rights reserved.
+            © 2026 KOK41NSTUDIO™. All rights reserved.
           </p>
         </div>
       </div>

@@ -14,7 +14,7 @@
               <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center shadow-red">
                 <span class="material-icons-round text-white text-3xl">shopping_bag</span>
               </div>
-              <span class="font-display text-3xl font-bold text-accent-dark">KOK41STUDIO</span>
+              <span class="font-display text-3xl font-bold text-accent-dark">KOK41NSTUDIO™</span>
             </div>
 
             <!-- Headline -->
