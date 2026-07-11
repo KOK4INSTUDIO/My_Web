@@ -84,7 +84,15 @@ async function loadAbout() {
       .single()
 
     if (data) {
-      aboutData.value = data
+      // Replace old brand name with new one
+      const updatedData = {
+        ...data,
+        title: data.title?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+        content1: data.content1?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+        content2: data.content2?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+        content3: data.content3?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™')
+      }
+      aboutData.value = updatedData
     }
   } catch (error) {
     console.error('Error loading about content:', error)

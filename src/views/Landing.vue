@@ -308,9 +308,9 @@ const categories = ref([
 ])
 const aboutData = ref({
   title: 'Tentang KOK41NSTUDIO™',
-  content1: 'KOK41NSTUDIO adalah brand fashion yang lahir dari semangat untuk terus berkarya dan menghadirkan produk berkualitas bagi setiap pelanggan. Kami baru memulai perjalanan di dunia fashion, namun kami memiliki komitmen yang kuat untuk menghasilkan berbagai produk custom yang dibuat dengan perhatian terhadap detail, kualitas, dan identitas yang khas.',
+  content1: 'KOK41NSTUDIO™ adalah brand fashion yang lahir dari semangat untuk terus berkarya dan menghadirkan produk berkualitas bagi setiap pelanggan. Kami baru memulai perjalanan di dunia fashion, namun kami memiliki komitmen yang kuat untuk menghasilkan berbagai produk custom yang dibuat dengan perhatian terhadap detail, kualitas, dan identitas yang khas.',
   content2: 'Setiap produk yang kami hadirkan dirancang untuk memberikan kenyamanan, nilai estetika, serta karakter yang dapat mewakili gaya dan kepribadian penggunanya. Kami percaya bahwa sebuah produk tidak hanya sekadar pakaian atau aksesori, tetapi juga menjadi bagian dari identitas dan ekspresi diri.',
-  content3: 'Dengan mengutamakan kualitas bahan, proses produksi yang teliti, serta pelayanan terbaik, KOK41NSTUDIO terus berupaya berkembang dan menghadirkan karya-karya yang dapat dibanggakan. Terima kasih telah menjadi bagian dari perjalanan kami dalam menciptakan produk fashion yang autentik dan bernilai.'
+  content3: 'Dengan mengutamakan kualitas bahan, proses produksi yang teliti, serta pelayanan terbaik, KOK41NSTUDIO™ terus berupaya berkembang dan menghadirkan karya-karya yang dapat dibanggakan. Terima kasih telah menjadi bagian dari perjalanan kami dalam menciptakan produk fashion yang autentik dan bernilai.'
 })
 
 const carouselPhotos = ref([
@@ -340,7 +340,14 @@ onUnmounted(() => {
 async function loadBanners() {
   const localBanners = localStorage.getItem('kok4ins_banners')
   if (localBanners) {
-    banners.value = JSON.parse(localBanners)
+    const parsedBanners = JSON.parse(localBanners)
+    // Replace old brand name in local banners
+    const updatedLocalBanners = parsedBanners.map(banner => ({
+      ...banner,
+      title: banner.title?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+      description: banner.description?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™')
+    }))
+    banners.value = updatedLocalBanners
   }
   try {
     const { data, error: fetchError } = await supabase
@@ -348,7 +355,13 @@ async function loadBanners() {
       .select('*')
       .order('sort_order', { ascending: true })
     if (!fetchError && data && data.length > 0) {
-      banners.value = data
+      // Replace old brand name in banners from Supabase
+      const updatedBanners = data.map(banner => ({
+        ...banner,
+        title: banner.title?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+        description: banner.description?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™')
+      }))
+      banners.value = updatedBanners
     }
   } catch (err) {
     console.warn('Supabase not available, using localStorage')
@@ -401,7 +414,15 @@ async function loadAbout() {
       .single()
 
     if (data) {
-      aboutData.value = data
+      // Replace old brand name with new one
+      const updatedData = {
+        ...data,
+        title: data.title?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+        content1: data.content1?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+        content2: data.content2?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+        content3: data.content3?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™')
+      }
+      aboutData.value = updatedData
     }
   } catch (error) {
     console.error('Error loading about content:', error)

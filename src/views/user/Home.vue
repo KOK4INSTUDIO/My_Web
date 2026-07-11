@@ -49,14 +49,14 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <div class="flex items-center justify-center gap-3 mb-8">
-            <span class="font-display text-3xl font-bold text-accent-dark">KOK41STUDIO™</span>
+            <span class="font-display text-3xl font-bold text-accent-dark">KOK41NSTUDIO™</span>
           </div>
           <p class="text-primary-600 text-sm font-medium uppercase tracking-wider mb-4">MAKE IT YOURS</p>
           <h1 class="font-display text-5xl md:text-6xl font-bold text-accent-dark mb-6">
             Mari Berkolaborasi
           </h1>
           <p class="text-accent-gray text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Jangan hanya memakai produk yang sama dengan orang lain. Tambahkan sentuhan pribadi melalui layanan custom KOK41STUDIO™.
+            Jangan hanya memakai produk yang sama dengan orang lain. Tambahkan sentuhan pribadi melalui layanan custom KOK41NSTUDIO™.
 
 Desain sendiri. Ekspresikan diri. Tampilkan identitasmu.
           </p>
@@ -171,7 +171,14 @@ async function loadCategories() {
 async function loadBanners() {
   const localBanners = localStorage.getItem('kok4ins_banners')
   if (localBanners) {
-    banners.value = JSON.parse(localBanners)
+    const parsedBanners = JSON.parse(localBanners)
+    // Replace old brand name in local banners
+    const updatedLocalBanners = parsedBanners.map(banner => ({
+      ...banner,
+      title: banner.title?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+      description: banner.description?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™')
+    }))
+    banners.value = updatedLocalBanners
   }
   try {
     const { data, error: fetchError } = await supabase
@@ -179,7 +186,13 @@ async function loadBanners() {
       .select('*')
       .order('sort_order', { ascending: true })
     if (!fetchError && data && data.length > 0) {
-      banners.value = data
+      // Replace old brand name in banners from Supabase
+      const updatedBanners = data.map(banner => ({
+        ...banner,
+        title: banner.title?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+        description: banner.description?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™')
+      }))
+      banners.value = updatedBanners
     }
   } catch (err) {
     console.warn('Supabase not available, using localStorage')

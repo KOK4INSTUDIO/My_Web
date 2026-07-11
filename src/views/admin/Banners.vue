@@ -153,7 +153,14 @@ async function loadBanners() {
     .select('*')
     .order('sort_order', { ascending: true })
   
-  banners.value = data || []
+  // Replace old brand name in banners
+  const updatedBanners = (data || []).map(banner => ({
+    ...banner,
+    title: banner.title?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™'),
+    description: banner.description?.replace(/KOK4INSTUDIO|KOK41STUDIO/g, 'KOK41NSTUDIO™')
+  }))
+  
+  banners.value = updatedBanners
 }
 
 function addBanner() {
