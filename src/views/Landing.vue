@@ -314,8 +314,8 @@ const aboutData = ref({
 })
 
 const carouselPhotos = ref([
-  '/asset/img002.jpg',
   '/asset/img002.png',
+  '/asset/img003.png',
   '/asset/img003.jpeg',
   '/asset/img004.jpeg',
 ])
